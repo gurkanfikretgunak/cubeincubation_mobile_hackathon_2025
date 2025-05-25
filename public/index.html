@@ -38,34 +38,114 @@
       box-shadow: 0 4px 32px rgba(60,60,120,0.08);
       padding: 32px 24px 40px 24px;
     }
+    /* Enhanced Info Bar - Card Based Design */
+    .info-bar-container {
+      max-width: 950px;
+      margin: 16px auto 24px auto;
+      padding: 0 18px;
+    }
+    
     .info-bar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
       width: 100%;
-      background: #e0e7ff;
-      color: #232946;
-      border-radius: 0 0 12px 12px;
-      box-shadow: 0 2px 8px rgba(120,120,180,0.07);
-      padding: 12px 18px;
-      font-size: 1.02em;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 18px;
-      align-items: center;
-      justify-content: flex-start;
-      margin-bottom: 18px;
-      word-break: break-all;
     }
-    .info-bar span {
-      margin-right: 18px;
-      font-weight: 500;
-      font-size: 0.98em;
+    
+    .info-card {
+      background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 16px 20px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .info-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #3b82f6, #8b5cf6, #06b6d4);
+      transform: translateX(-100%);
+      transition: transform 0.6s ease;
+    }
+    
+    .info-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      border-color: #a3bcf7;
+    }
+    
+    .info-card:hover::before {
+      transform: translateX(0);
+    }
+    
+    .info-card-header {
       display: flex;
       align-items: center;
-      gap: 4px;
+      gap: 8px;
+      margin-bottom: 8px;
     }
-    .info-bar .info-label {
-      color: #4f518c;
+    
+    .info-card-icon {
+      font-size: 18px;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .info-card-title {
+      font-size: 0.85rem;
       font-weight: 600;
-      margin-right: 4px;
+      color: #4f518c;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin: 0;
+    }
+    
+    .info-card-value {
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: #232946;
+      margin: 0;
+      word-break: break-word;
+      line-height: 1.4;
+    }
+    
+    .info-card-secondary {
+      font-size: 0.8rem;
+      color: #64748b;
+      margin-top: 4px;
+      margin-bottom: 0;
+    }
+    
+    .status-indicator {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #10b981;
+      margin-left: auto;
+      flex-shrink: 0;
+      box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+      animation: pulse-status 2s infinite;
+    }
+    
+    @keyframes pulse-status {
+      0%, 100% { 
+        opacity: 1;
+        transform: scale(1);
+      }
+      50% { 
+        opacity: 0.8;
+        transform: scale(1.1);
+      }
     }
     h1, h2, h3 {
       color: #3a3a5a;
@@ -102,7 +182,29 @@
     .table-wrap {
       overflow-x: auto;
       margin-bottom: 2em;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+      scrollbar-color: #a3bcf7 #f8fafc;
     }
+    
+    .table-wrap::-webkit-scrollbar {
+      height: 8px;
+    }
+    
+    .table-wrap::-webkit-scrollbar-track {
+      background: #f8fafc;
+      border-radius: 4px;
+    }
+    
+    .table-wrap::-webkit-scrollbar-thumb {
+      background: #a3bcf7;
+      border-radius: 4px;
+    }
+    
+    .table-wrap::-webkit-scrollbar-thumb:hover {
+      background: #8b9fd1;
+    }
+    
     table {
       border-collapse: collapse;
       width: 100%;
@@ -110,15 +212,118 @@
       background: #f8fafc;
       border-radius: 8px;
       overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      transition: box-shadow 0.2s ease;
     }
+    
+    table:hover {
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+    
     th, td {
       border: 1px solid #a3bcf7;
       padding: 10px 12px;
       text-align: left;
+      transition: background-color 0.2s ease;
     }
+    
     th {
       background: #e0e7ff;
       color: #232946;
+      font-weight: 600;
+      font-size: 0.95em;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    td {
+      background: white;
+    }
+    
+    tr:hover td {
+      background: #f0f4ff;
+    }
+    
+    /* Enhanced Interactive Elements */
+    
+    button, .btn, a[href] {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+    
+    button:focus, .btn:focus, a:focus {
+      outline: 2px solid #a3bcf7;
+      outline-offset: 2px;
+    }
+    
+    button:active, .btn:active {
+      transform: translateY(1px);
+    }
+    
+    /* Improved Link Styling */
+    a {
+      color: #3b82f6;
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: all 0.2s ease;
+    }
+    
+    a:hover {
+      color: #1d4ed8;
+      border-bottom-color: #3b82f6;
+    }
+    
+    a:visited {
+      color: #7c3aed;
+    }
+    
+    a:active {
+      color: #1e40af;
+    }
+    
+    /* List Improvements */
+    ul li, ol li {
+      margin-bottom: 0.5em;
+      line-height: 1.6;
+      transition: color 0.2s ease;
+    }
+    
+    ul li:hover, ol li:hover {
+      color: #4f518c;
+    }
+    
+    /* Code Block Enhancements */
+    code, pre {
+      background: #f3f6fd;
+      border-radius: 6px;
+      padding: 2px 6px;
+      font-family: 'Fira Mono', 'Consolas', 'Monaco', monospace;
+      font-size: 0.98em;
+      border: 1px solid #e0e7ff;
+      transition: all 0.2s ease;
+    }
+    
+    code:hover, pre:hover {
+      background: #e8f0fe;
+      border-color: #a3bcf7;
+    }
+    
+    pre {
+      padding: 12px 16px;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+    
+    /* Section Styling Improvements */
+    .section {
+      transition: transform 0.2s ease;
+    }
+    
+    .section:hover {
+      transform: translateY(-1px);
     }
     .deliverables {
       background: #f3f6fd;
@@ -342,6 +547,335 @@
         min-width: 180px;
       }
     }
+
+    /* Enhanced Responsive Design System */
+    
+    /* Large Desktop Breakpoint: 1200px+ */
+    @media (min-width: 1200px) {
+      .container {
+        max-width: 1100px;
+        padding: 40px 32px 48px 32px;
+      }
+      
+      h1 {
+        font-size: 2.5rem;
+      }
+      
+      .info-bar {
+        padding: 16px 24px;
+        font-size: 1.1em;
+      }
+    }
+    
+    /* Desktop Breakpoint: 768px - 1199px */
+    @media (min-width: 768px) and (max-width: 1199px) {
+      .container {
+        margin: 24px 16px;
+        padding: 28px 20px 36px 20px;
+      }
+      
+      .info-bar {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      h1 {
+        font-size: 2rem;
+      }
+      
+      h2 {
+        font-size: 1.3rem;
+      }
+    }
+    
+    /* Tablet Breakpoint: 600px - 767px */
+    @media (min-width: 600px) and (max-width: 767px) {
+      .container {
+        margin: 16px 12px;
+        padding: 24px 16px 32px 16px;
+      }
+      
+      .info-bar {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+      
+      .info-card {
+        padding: 14px 16px;
+      }
+      
+      h1 {
+        font-size: 1.8rem;
+      }
+      
+      h2 {
+        font-size: 1.2rem;
+      }
+      
+      .table-wrap {
+        margin-left: -16px;
+        margin-right: -16px;
+        border-radius: 0;
+      }
+      
+      table {
+        border-radius: 0;
+      }
+      
+      th, td {
+        padding: 8px 10px;
+        font-size: 0.9rem;
+      }
+    }
+    
+    /* Mobile Breakpoint: up to 599px */
+    @media (max-width: 599px) {
+      .container {
+        margin: 12px 8px;
+        padding: 20px 12px 28px 12px;
+        border-radius: 12px;
+      }
+      
+      .info-bar-container {
+        margin: 12px auto 20px auto;
+        padding: 0 8px;
+      }
+      
+      .info-bar {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+      
+      .info-card {
+        padding: 12px 14px;
+      }
+      
+      .info-card-value {
+        font-size: 1rem;
+      }
+      
+      h1 {
+        font-size: 1.6rem;
+        line-height: 1.3;
+      }
+      
+      h2 {
+        font-size: 1.1rem;
+        margin-top: 1.5em;
+      }
+      
+      h3 {
+        font-size: 1rem;
+      }
+      
+      .table-wrap {
+        margin-left: -12px;
+        margin-right: -12px;
+        border-radius: 0;
+      }
+      
+      table {
+        border-radius: 0;
+        font-size: 0.85rem;
+      }
+      
+      th, td {
+        padding: 6px 8px;
+        font-size: 0.8rem;
+      }
+      
+      th {
+        font-size: 0.75rem;
+      }
+    }
+    
+    /* Extra Small Mobile: up to 375px */
+    @media (max-width: 375px) {
+      .container {
+        margin: 8px 4px;
+        padding: 16px 8px 24px 8px;
+      }
+      
+      .info-bar-container {
+        padding: 0 4px;
+      }
+      
+      .info-card {
+        padding: 10px 12px;
+      }
+      
+      h1 {
+        font-size: 1.4rem;
+      }
+      
+      h2 {
+        font-size: 1rem;
+      }
+      
+      .table-wrap {
+        margin-left: -8px;
+        margin-right: -8px;
+      }
+      
+      th, td {
+        padding: 4px 6px;
+        font-size: 0.75rem;
+      }
+    }
+    
+    /* Landscape Orientation */
+    @media (max-height: 500px) and (orientation: landscape) {
+      .info-bar {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      }
+      
+      .info-card {
+        padding: 8px 12px;
+      }
+      
+      .info-card-value {
+        font-size: 0.95rem;
+      }
+      
+      h1 {
+        font-size: 1.4rem;
+        margin-bottom: 0.3em;
+      }
+      
+      h2 {
+        font-size: 1rem;
+        margin-top: 1em;
+        margin-bottom: 0.3em;
+      }
+    }
+    
+    /* High Contrast Mode */
+    @media (prefers-contrast: high) {
+      .info-card {
+        border: 2px solid #000;
+        background: #fff;
+      }
+      
+      .info-card:hover {
+        border-color: #0066cc;
+      }
+      
+      .status-indicator {
+        border: 2px solid #000;
+      }
+    }
+    
+    /* Reduced Motion */
+    @media (prefers-reduced-motion: reduce) {
+      .info-card,
+      .info-card::before,
+      .status-indicator {
+        transition: none;
+        animation: none;
+      }
+      
+      .info-card:hover {
+        transform: none;
+      }
+    }
+    
+    /* Print Styles */
+    @media print {
+      .info-bar-container {
+        display: none;
+      }
+      
+      .container {
+        box-shadow: none;
+        border: 1px solid #000;
+        margin: 0;
+        max-width: none;
+      }
+    }
+    
+    /* Viewport Change Notification Styles */
+    .viewport-notification {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+      color: #ffffff;
+      padding: 12px 20px;
+      border-radius: 12px;
+      box-shadow: 0 8px 32px rgba(59, 130, 246, 0.3);
+      z-index: 1000;
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-size: 0.9rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      max-width: 90vw;
+      opacity: 0;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .viewport-notification.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+    
+    .viewport-notification.hide {
+      opacity: 0;
+      transform: translateX(-50%) translateY(20px);
+    }
+    
+    .notification-icon {
+      font-size: 1.1em;
+      flex-shrink: 0;
+    }
+    
+    .notification-text {
+      flex: 1;
+      line-height: 1.4;
+    }
+    
+    /* Mobile adjustments for notifications */
+    @media (max-width: 599px) {
+      .viewport-notification {
+        bottom: 16px;
+        padding: 10px 16px;
+        font-size: 0.85rem;
+        border-radius: 10px;
+        max-width: 95vw;
+      }
+      
+      .notification-icon {
+        font-size: 1em;
+      }
+    }
+    
+    /* High contrast mode for notifications */
+    @media (prefers-contrast: high) {
+      .viewport-notification {
+        background: #000;
+        color: #fff;
+        border: 2px solid #fff;
+      }
+    }
+    
+    /* Reduced motion for notifications */
+    @media (prefers-reduced-motion: reduce) {
+      .viewport-notification {
+        transition: opacity 0.2s ease;
+      }
+      
+      .viewport-notification.show {
+        transform: translateX(-50%) translateY(0);
+      }
+      
+      .viewport-notification.hide {
+        transform: translateX(-50%) translateY(0);
+      }
+    }
   </style>
   <!-- Google Analytics (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-XSTTRGZS5N"></script>
@@ -353,11 +887,48 @@
   </script>
 </head>
 <body>
-  <div class="info-bar" id="infoBar">
-    <span><span class="info-label">Platform:</span> <span id="platformInfo">-</span></span>
-    <span><span class="info-label">IP:</span> <span id="ipInfo">-</span></span>
-    <span><span class="info-label">Screen:</span> <span id="screenInfo">-</span></span>
-    <span><span class="info-label">Language:</span> <span id="langInfo">-</span></span>
+  <div class="info-bar-container">
+    <div class="info-bar" id="infoBar">
+      <div class="info-card" id="deviceCard">
+        <div class="info-card-header">
+          <span class="info-card-icon">📱</span>
+          <h3 class="info-card-title">Device Info</h3>
+          <div class="status-indicator"></div>
+        </div>
+        <p class="info-card-value" id="deviceInfo">-</p>
+        <p class="info-card-secondary" id="deviceSecondary">-</p>
+      </div>
+      
+      <div class="info-card" id="locationCard">
+        <div class="info-card-header">
+          <span class="info-card-icon">🌍</span>
+          <h3 class="info-card-title">Location</h3>
+          <div class="status-indicator"></div>
+        </div>
+        <p class="info-card-value" id="ipInfo">-</p>
+        <p class="info-card-secondary" id="locationSecondary">-</p>
+      </div>
+      
+      <div class="info-card" id="displayCard">
+        <div class="info-card-header">
+          <span class="info-card-icon">💻</span>
+          <h3 class="info-card-title">Display</h3>
+          <div class="status-indicator"></div>
+        </div>
+        <p class="info-card-value" id="screenInfo">-</p>
+        <p class="info-card-secondary" id="displaySecondary">-</p>
+      </div>
+      
+      <div class="info-card" id="systemCard">
+        <div class="info-card-header">
+          <span class="info-card-icon">⚙️</span>
+          <h3 class="info-card-title">System</h3>
+          <div class="status-indicator"></div>
+        </div>
+        <p class="info-card-value" id="langInfo">-</p>
+        <p class="info-card-secondary" id="systemSecondary">-</p>
+      </div>
+    </div>
   </div>
   <!-- Hackathon Countdown & Calendar -->
   <div id="hackathonCountdown" style="max-width:950px;margin:0 auto 18px auto;padding:16px 18px 12px 18px;background:#fffbe6;border-radius:10px;box-shadow:0 2px 8px rgba(251,191,36,0.08);color:#7c6f00;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;">
@@ -683,21 +1254,786 @@
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
   <script>
-    // Info bar population
-    document.getElementById('platformInfo').textContent = navigator.userAgent;
-    document.getElementById('screenInfo').textContent = window.screen.width + "x" + window.screen.height;
-    document.getElementById('langInfo').textContent = navigator.language || navigator.userLanguage;
+    // Enhanced Info Card Population and Firebase Analytics Integration
+    class DeviceInfoManager {
+      constructor() {
+        this.deviceInfo = {};
+        this.init();
+      }
+      
+      init() {
+        this.collectDeviceInfo();
+        this.populateInfoCards();
+        this.sendToFirebaseAnalytics();
+      }
+      
+      detectDeviceType() {
+        const userAgent = navigator.userAgent.toLowerCase();
+        const width = window.screen.width;
+        const height = window.screen.height;
+        
+        // Mobile device detection
+        if (/android/.test(userAgent)) {
+          return {
+            type: 'Android',
+            category: 'Mobile',
+            icon: '🤖'
+          };
+        } else if (/iphone|ipod/.test(userAgent)) {
+          return {
+            type: 'iPhone',
+            category: 'Mobile',
+            icon: '📱'
+          };
+        } else if (/ipad/.test(userAgent)) {
+          return {
+            type: 'iPad',
+            category: 'Tablet',
+            icon: '📱'
+          };
+        } else if (/macintosh|mac os x/.test(userAgent)) {
+          return {
+            type: 'macOS',
+            category: 'Desktop',
+            icon: '💻'
+          };
+        } else if (/windows/.test(userAgent)) {
+          return {
+            type: 'Windows',
+            category: 'Desktop',
+            icon: '💻'
+          };
+        } else if (/linux/.test(userAgent)) {
+          return {
+            type: 'Linux',
+            category: 'Desktop',
+            icon: '🐧'
+          };
+        } else {
+          return {
+            type: 'Unknown',
+            category: width < 768 ? 'Mobile' : 'Desktop',
+            icon: '❓'
+          };
+        }
+      }
+      
+      detectBrowser() {
+        const userAgent = navigator.userAgent.toLowerCase();
+        
+        if (userAgent.includes('chrome') && !userAgent.includes('edge')) {
+          return { name: 'Chrome', icon: '🌐' };
+        } else if (userAgent.includes('firefox')) {
+          return { name: 'Firefox', icon: '🦊' };
+        } else if (userAgent.includes('safari') && !userAgent.includes('chrome')) {
+          return { name: 'Safari', icon: '🧭' };
+        } else if (userAgent.includes('edge')) {
+          return { name: 'Edge', icon: '🌐' };
+        } else if (userAgent.includes('opera')) {
+          return { name: 'Opera', icon: '🎭' };
+        } else {
+          return { name: 'Unknown', icon: '❓' };
+        }
+      }
+      
+      getConnectionInfo() {
+        const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+        if (connection) {
+          return {
+            type: connection.effectiveType || 'unknown',
+            downlink: connection.downlink || null,
+            rtt: connection.rtt || null
+          };
+        }
+        return null;
+      }
+      
+      getDisplayInfo() {
+        const screen = window.screen;
+        const viewport = {
+          width: window.innerWidth,
+          height: window.innerHeight
+        };
+        
+        return {
+          screen: {
+            width: screen.width,
+            height: screen.height,
+            colorDepth: screen.colorDepth,
+            pixelDepth: screen.pixelDepth
+          },
+          viewport: viewport,
+          devicePixelRatio: window.devicePixelRatio || 1,
+          orientation: screen.orientation ? screen.orientation.type : 
+                      (viewport.width > viewport.height ? 'landscape' : 'portrait')
+        };
+      }
+      
+      collectDeviceInfo() {
+        const device = this.detectDeviceType();
+        const browser = this.detectBrowser();
+        const display = this.getDisplayInfo();
+        const connection = this.getConnectionInfo();
+        
+        this.deviceInfo = {
+          // Device Information
+          deviceType: device.type,
+          deviceCategory: device.category,
+          deviceIcon: device.icon,
+          
+          // Browser Information
+          browser: browser.name,
+          browserIcon: browser.icon,
+          userAgent: navigator.userAgent,
+          
+          // System Information
+          platform: navigator.platform,
+          language: navigator.language,
+          languages: navigator.languages,
+          timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+          
+          // Display Information
+          screenResolution: `${display.screen.width}×${display.screen.height}`,
+          viewportSize: `${display.viewport.width}×${display.viewport.height}`,
+          colorDepth: display.screen.colorDepth,
+          pixelRatio: display.devicePixelRatio,
+          orientation: display.orientation,
+          
+          // Connection Information
+          connection: connection,
+          
+          // Additional Info
+          cookiesEnabled: navigator.cookieEnabled,
+          doNotTrack: navigator.doNotTrack,
+          hardwareConcurrency: navigator.hardwareConcurrency,
+          maxTouchPoints: navigator.maxTouchPoints || 0,
+          
+          // Performance
+          memoryInfo: (performance && performance.memory) ? {
+            totalJSHeapSize: performance.memory.totalJSHeapSize,
+            usedJSHeapSize: performance.memory.usedJSHeapSize,
+            jsHeapSizeLimit: performance.memory.jsHeapSizeLimit
+          } : null,
+          
+          // Timestamps
+          visitTime: new Date().toISOString(),
+          userAgent: navigator.userAgent
+        };
+      }
+      
+      populateInfoCards() {
+        const deviceInfo = this.deviceInfo;
+        
+        // Device Card
+        const deviceInfoEl = document.getElementById('deviceInfo');
+        const deviceSecondaryEl = document.getElementById('deviceSecondary');
+        if (deviceInfoEl) {
+          deviceInfoEl.textContent = `${deviceInfo.deviceIcon} ${deviceInfo.deviceType}`;
+        }
+        if (deviceSecondaryEl) {
+          deviceSecondaryEl.textContent = `${deviceInfo.browserIcon} ${deviceInfo.browser} • ${deviceInfo.deviceCategory}`;
+        }
+        
+        // Display Card
+        const screenInfoEl = document.getElementById('screenInfo');
+        const displaySecondaryEl = document.getElementById('displaySecondary');
+        if (screenInfoEl) {
+          screenInfoEl.textContent = deviceInfo.screenResolution;
+        }
+        if (displaySecondaryEl) {
+          displaySecondaryEl.textContent = `Viewport: ${deviceInfo.viewportSize} • ${deviceInfo.orientation}`;
+        }
+        
+        // System Card
+        const langInfoEl = document.getElementById('langInfo');
+        const systemSecondaryEl = document.getElementById('systemSecondary');
+        if (langInfoEl) {
+          langInfoEl.textContent = deviceInfo.language;
+        }
+        if (systemSecondaryEl) {
+          const touchInfo = deviceInfo.maxTouchPoints > 0 ? `Touch: ${deviceInfo.maxTouchPoints} points` : 'No touch';
+          systemSecondaryEl.textContent = `${deviceInfo.timezone} • ${touchInfo}`;
+        }
+        
+        // Get IP info separately
+        this.getLocationInfo();
+      }
+      
+      getLocationInfo() {
+        fetch('https://api.ipify.org?format=json')
+          .then(res => res.json())
+          .then(data => {
+            const ipInfoEl = document.getElementById('ipInfo');
+            if (ipInfoEl) {
+              ipInfoEl.textContent = data.ip;
+            }
+            
+            // Get location info
+            return fetch(`https://ipapi.co/${data.ip}/json/`);
+          })
+          .then(res => res.json())
+          .then(locationData => {
+            const locationSecondaryEl = document.getElementById('locationSecondary');
+            if (locationSecondaryEl && locationData.city && locationData.country_name) {
+              locationSecondaryEl.textContent = `${locationData.city}, ${locationData.country_name}`;
+            }
+            
+            // Update device info with location
+            this.deviceInfo.location = {
+              ip: locationData.ip,
+              city: locationData.city,
+              country: locationData.country_name,
+              countryCode: locationData.country_code,
+              region: locationData.region,
+              timezone: locationData.timezone
+            };
+            
+            // Send updated info to Firebase
+            this.sendToFirebaseAnalytics();
+          })
+          .catch(error => {
+            console.log('Location fetch failed:', error);
+            const ipInfoEl = document.getElementById('ipInfo');
+            const locationSecondaryEl = document.getElementById('locationSecondary');
+            if (ipInfoEl) ipInfoEl.textContent = 'Private';
+            if (locationSecondaryEl) locationSecondaryEl.textContent = 'Location not available';
+          });
+      }
+      
+      sendToFirebaseAnalytics() {
+        if (typeof firebase !== "undefined" && typeof firebase.analytics === "function") {
+          try {
+            // Send comprehensive device info to Firebase Analytics
+            firebase.analytics().logEvent('device_info_collected', {
+              // Device Details
+              device_type: this.deviceInfo.deviceType,
+              device_category: this.deviceInfo.deviceCategory,
+              browser_name: this.deviceInfo.browser,
+              platform: this.deviceInfo.platform,
+              
+              // Display Information
+              screen_resolution: this.deviceInfo.screenResolution,
+              viewport_size: this.deviceInfo.viewportSize,
+              pixel_ratio: this.deviceInfo.pixelRatio,
+              orientation: this.deviceInfo.orientation,
+              color_depth: this.deviceInfo.colorDepth,
+              
+              // System Information
+              language: this.deviceInfo.language,
+              timezone: this.deviceInfo.timezone,
+              cookies_enabled: this.deviceInfo.cookiesEnabled,
+              hardware_concurrency: this.deviceInfo.hardwareConcurrency,
+              max_touch_points: this.deviceInfo.maxTouchPoints,
+              
+              // Location (if available)
+              country: this.deviceInfo.location ? this.deviceInfo.location.country : null,
+              city: this.deviceInfo.location ? this.deviceInfo.location.city : null,
+              ip_timezone: this.deviceInfo.location ? this.deviceInfo.location.timezone : null,
+              
+              // Connection Info (if available)
+              connection_type: this.deviceInfo.connection ? this.deviceInfo.connection.type : null,
+              connection_downlink: this.deviceInfo.connection ? this.deviceInfo.connection.downlink : null,
+              
+              // Performance (if available)
+              js_heap_size: this.deviceInfo.memoryInfo ? this.deviceInfo.memoryInfo.usedJSHeapSize : null,
+              
+              // Timestamps
+              visit_timestamp: this.deviceInfo.visitTime
+            });
+            
+            // Also send a simplified version to custom dimensions
+            firebase.analytics().setUserProperties({
+              device_type: this.deviceInfo.deviceType,
+              browser: this.deviceInfo.browser,
+              screen_size: this.deviceInfo.screenResolution,
+              location_country: this.deviceInfo.location ? this.deviceInfo.location.country : 'unknown'
+            });
+            
+            console.log('✅ Device info sent to Firebase Analytics');
+          } catch (error) {
+            console.error('❌ Failed to send to Firebase Analytics:', error);
+          }
+        }
+        
+        // Also send to Google Analytics if available
+        if (typeof gtag === "function") {
+          gtag('event', 'device_info', {
+            device_type: this.deviceInfo.deviceType,
+            browser: this.deviceInfo.browser,
+            screen_resolution: this.deviceInfo.screenResolution,
+            language: this.deviceInfo.language
+          });
+        }
+      }
+      
+      // Public method to get device info
+      getDeviceInfo() {
+        return this.deviceInfo;
+      }
+      
+      // Public method to refresh info
+      refresh() {
+        this.collectDeviceInfo();
+        this.populateInfoCards();
+        this.sendToFirebaseAnalytics();
+      }
+    }
+    
+    // Initialize Device Info Manager
+    const deviceInfoManager = new DeviceInfoManager();
+    
+    // Make it globally accessible for debugging
+    window.deviceInfoManager = deviceInfoManager;
+    
+    // Update info on viewport changes
+    window.addEventListener('resize', () => {
+      setTimeout(() => {
+        deviceInfoManager.refresh();
+      }, 200);
+    });
+    
+    window.addEventListener('orientationchange', () => {
+      setTimeout(() => {
+        deviceInfoManager.refresh();
+      }, 500);
+    });
 
-    // Get IP address (using a free public API)
-    fetch('https://api.ipify.org?format=json')
-      .then(res => res.json())
-      .then(data => {
-        document.getElementById('ipInfo').textContent = data.ip;
-      })
-      .catch(() => {
-        document.getElementById('ipInfo').textContent = 'N/A';
-      });
+    // Viewport Change Detection and Notification System
+    class ViewportNotificationManager {
+      constructor() {
+        this.currentViewport = this.detectViewport();
+        this.isFirstLoad = true;
+        this.notificationQueue = [];
+        this.isShowingNotification = false;
+        
+        // Debounce resize events
+        this.resizeTimeout = null;
+        this.resizeDelay = 150;
+        
+        this.init();
+      }
+      
+      init() {
+        window.addEventListener('resize', this.handleResize.bind(this));
+        window.addEventListener('orientationchange', this.handleOrientationChange.bind(this));
+        
+        // Initial load notification (delayed)
+        setTimeout(() => {
+          this.showViewportNotification(this.currentViewport, 'initial');
+          this.isFirstLoad = false;
+        }, 1000);
+      }
+      
+      detectViewport() {
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+        const orientation = width > height ? 'landscape' : 'portrait';
+        
+        let viewport = {
+          type: '',
+          width: width,
+          height: height,
+          orientation: orientation,
+          ratio: Math.round((width / height) * 100) / 100
+        };
+        
+        if (width >= 1200) {
+          viewport.type = 'desktop-large';
+        } else if (width >= 768) {
+          viewport.type = 'desktop';
+        } else if (width >= 600) {
+          viewport.type = 'tablet';
+        } else if (width >= 375) {
+          viewport.type = 'mobile';
+        } else {
+          viewport.type = 'mobile-small';
+        }
+        
+        return viewport;
+      }
+      
+      handleResize() {
+        clearTimeout(this.resizeTimeout);
+        this.resizeTimeout = setTimeout(() => {
+          const newViewport = this.detectViewport();
+          
+          if (this.hasViewportChanged(newViewport)) {
+            const previousViewport = this.currentViewport;
+            this.currentViewport = newViewport;
+            
+            if (!this.isFirstLoad) {
+              this.showViewportNotification(newViewport, 'resize', previousViewport);
+            }
+          }
+        }, this.resizeDelay);
+      }
+      
+      handleOrientationChange() {
+        // Wait for orientation change to complete
+        setTimeout(() => {
+          const newViewport = this.detectViewport();
+          const previousViewport = this.currentViewport;
+          this.currentViewport = newViewport;
+          
+          if (!this.isFirstLoad) {
+            this.showViewportNotification(newViewport, 'orientation', previousViewport);
+          }
+        }, 200);
+      }
+      
+      hasViewportChanged(newViewport) {
+        return newViewport.type !== this.currentViewport.type || 
+               newViewport.orientation !== this.currentViewport.orientation;
+      }
+      
+      getViewportDisplayName(viewport, language = 'tr') {
+        const names = {
+          tr: {
+            'desktop-large': '🖥️ Büyük Masaüstü',
+            'desktop': '💻 Masaüstü',
+            'tablet': '📱 Tablet',
+            'mobile': '📱 Mobil',
+            'mobile-small': '📱 Küçük Mobil',
+            'landscape': 'Yatay',
+            'portrait': 'Dikey'
+          },
+          en: {
+            'desktop-large': '🖥️ Large Desktop',
+            'desktop': '💻 Desktop',
+            'tablet': '📱 Tablet', 
+            'mobile': '📱 Mobile',
+            'mobile-small': '📱 Small Mobile',
+            'landscape': 'Landscape',
+            'portrait': 'Portrait'
+          }
+        };
+        
+        return names[language] || names.en;
+      }
+      
+      generateNotificationMessage(viewport, changeType, previousViewport = null) {
+        const userLang = (navigator.language || navigator.userLanguage || 'en').slice(0,2).toLowerCase();
+        const isTR = userLang === 'tr';
+        const names = this.getViewportDisplayName(viewport, isTR ? 'tr' : 'en');
+        
+        let message = '';
+        const deviceName = names[viewport.type];
+        const orientationName = names[viewport.orientation];
+        
+        switch (changeType) {
+          case 'initial':
+            message = isTR 
+              ? `${deviceName} modunda görüntüleniyor (${viewport.width}×${viewport.height})`
+              : `Viewing in ${deviceName} mode (${viewport.width}×${viewport.height})`;
+            break;
+            
+          case 'resize':
+            if (previousViewport && previousViewport.type !== viewport.type) {
+              const prevNames = this.getViewportDisplayName(previousViewport, isTR ? 'tr' : 'en');
+              message = isTR
+                ? `${prevNames[previousViewport.type]} ➜ ${deviceName} moduna geçildi`
+                : `Switched from ${prevNames[previousViewport.type]} to ${deviceName} mode`;
+            } else {
+              message = isTR
+                ? `Ekran boyutu değişti: ${viewport.width}×${viewport.height}`
+                : `Screen resized: ${viewport.width}×${viewport.height}`;
+            }
+            break;
+            
+          case 'orientation':
+            message = isTR
+              ? `${orientationName} konumuna döndürüldü (${viewport.width}×${viewport.height})`
+              : `Rotated to ${orientationName} (${viewport.width}×${viewport.height})`;
+            break;
+        }
+        
+        return message;
+      }
+      
+      showViewportNotification(viewport, changeType, previousViewport = null) {
+        const message = this.generateNotificationMessage(viewport, changeType, previousViewport);
+        
+        // Add to queue if already showing a notification
+        if (this.isShowingNotification) {
+          this.notificationQueue.push({ viewport, changeType, previousViewport, message });
+          return;
+        }
+        
+        this.displayNotification(message);
+      }
+      
+      displayNotification(message) {
+        this.isShowingNotification = true;
+        
+        // Remove any existing notification
+        const existingNotification = document.querySelector('.viewport-notification');
+        if (existingNotification) {
+          existingNotification.remove();
+        }
+        
+        // Create notification element
+        const notification = document.createElement('div');
+        notification.className = 'viewport-notification';
+        notification.innerHTML = `
+          <span class="notification-icon">📏</span>
+          <span class="notification-text">${message}</span>
+        `;
+        
+        document.body.appendChild(notification);
+        
+        // Show animation
+        requestAnimationFrame(() => {
+          notification.classList.add('show');
+        });
+        
+        // Hide after delay
+        setTimeout(() => {
+          notification.classList.remove('show');
+          notification.classList.add('hide');
+          
+          setTimeout(() => {
+            if (notification.parentNode) {
+              notification.parentNode.removeChild(notification);
+            }
+            this.isShowingNotification = false;
+            
+            // Process queue
+            if (this.notificationQueue.length > 0) {
+              const next = this.notificationQueue.shift();
+              // Small delay before showing next notification
+              setTimeout(() => {
+                this.displayNotification(next.message);
+              }, 100);
+            }
+          }, 400);
+        }, 3000);
+      }
+      
+      // Public method to get current viewport info
+      getCurrentViewport() {
+        return this.currentViewport;
+      }
+      
+      // Public method to manually trigger viewport detection
+      updateViewport() {
+        const newViewport = this.detectViewport();
+        const hasChanged = this.hasViewportChanged(newViewport);
+        
+        if (hasChanged) {
+          const previousViewport = this.currentViewport;
+          this.currentViewport = newViewport;
+          this.showViewportNotification(newViewport, 'manual', previousViewport);
+        }
+        
+        return { viewport: newViewport, hasChanged };
+      }
+    }
+    
+    // Initialize viewport notification manager
+    const viewportManager = new ViewportNotificationManager();
+    
+    // Make it globally accessible for debugging
+    window.viewportManager = viewportManager;
 
+    // Performance and Responsive Design Monitoring
+    class ResponsivePerformanceMonitor {
+      constructor() {
+        this.metrics = {
+          resizeEvents: 0,
+          orientationChanges: 0,
+          layoutShifts: 0,
+          renderingIssues: []
+        };
+        
+        this.init();
+      }
+      
+      init() {
+        this.monitorLayoutShifts();
+        this.monitorPerformance();
+        this.checkResponsiveIssues();
+        
+        // Log initial viewport info
+        this.logViewportInfo();
+      }
+      
+      monitorLayoutShifts() {
+        if ('PerformanceObserver' in window) {
+          const observer = new PerformanceObserver((list) => {
+            for (const entry of list.getEntries()) {
+              if (entry.entryType === 'layout-shift' && !entry.hadRecentInput) {
+                this.metrics.layoutShifts++;
+                
+                if (entry.value > 0.1) {
+                  this.metrics.renderingIssues.push({
+                    type: 'layout-shift',
+                    value: entry.value,
+                    timestamp: entry.startTime,
+                    sources: entry.sources
+                  });
+                }
+              }
+            }
+          });
+          
+          observer.observe({ entryTypes: ['layout-shift'] });
+        }
+      }
+      
+      monitorPerformance() {
+        // Monitor paint metrics
+        if ('PerformanceObserver' in window) {
+          const observer = new PerformanceObserver((list) => {
+            for (const entry of list.getEntries()) {
+              if (entry.name === 'first-contentful-paint' && entry.startTime > 2500) {
+                this.metrics.renderingIssues.push({
+                  type: 'slow-fcp',
+                  value: entry.startTime,
+                  timestamp: Date.now()
+                });
+              }
+            }
+          });
+          
+          observer.observe({ entryTypes: ['paint'] });
+        }
+      }
+      
+      checkResponsiveIssues() {
+        // Check for common responsive design issues
+        setTimeout(() => {
+          const issues = [];
+          
+          // Check horizontal overflow
+          if (document.body.scrollWidth > window.innerWidth) {
+            issues.push({
+              type: 'horizontal-overflow',
+              bodyWidth: document.body.scrollWidth,
+              viewportWidth: window.innerWidth
+            });
+          }
+          
+          // Check for small touch targets
+          const buttons = document.querySelectorAll('button, a, input[type="button"]');
+          buttons.forEach((btn, index) => {
+            const rect = btn.getBoundingClientRect();
+            if (rect.width < 44 || rect.height < 44) {
+              issues.push({
+                type: 'small-touch-target',
+                element: btn.tagName + (btn.id ? '#' + btn.id : ''),
+                width: rect.width,
+                height: rect.height,
+                index: index
+              });
+            }
+          });
+          
+          // Check font sizes
+          const textElements = document.querySelectorAll('p, span, div, li');
+          textElements.forEach((el, index) => {
+            const style = window.getComputedStyle(el);
+            const fontSize = parseFloat(style.fontSize);
+            if (fontSize < 14 && window.innerWidth <= 768) {
+              issues.push({
+                type: 'small-font-size',
+                element: el.tagName,
+                fontSize: fontSize,
+                index: index
+              });
+            }
+          });
+          
+          if (issues.length > 0) {
+            this.metrics.renderingIssues.push(...issues);
+          }
+          
+          this.reportIssues();
+        }, 1000);
+      }
+      
+      logViewportInfo() {
+        const viewport = viewportManager.getCurrentViewport();
+        console.group('📱 Responsive Design Info');
+        console.log('Viewport Type:', viewport.type);
+        console.log('Dimensions:', `${viewport.width}×${viewport.height}`);
+        console.log('Orientation:', viewport.orientation);
+        console.log('Aspect Ratio:', viewport.ratio);
+        console.log('Device Pixel Ratio:', window.devicePixelRatio || 1);
+        console.log('Screen:', `${screen.width}×${screen.height}`);
+        console.groupEnd();
+      }
+      
+      reportIssues() {
+        if (this.metrics.renderingIssues.length > 0) {
+          console.group('⚠️ Responsive Design Issues Found');
+          this.metrics.renderingIssues.forEach((issue, index) => {
+            console.warn(`Issue ${index + 1}:`, issue);
+          });
+          console.groupEnd();
+          
+          // Show notification for critical issues
+          const criticalIssues = this.metrics.renderingIssues.filter(issue => 
+            issue.type === 'horizontal-overflow' || 
+            (issue.type === 'layout-shift' && issue.value > 0.25)
+          );
+          
+          if (criticalIssues.length > 0) {
+            this.showCriticalIssueNotification(criticalIssues.length);
+          }
+        }
+      }
+      
+      showCriticalIssueNotification(count) {
+        const userLang = (navigator.language || navigator.userLanguage || 'en').slice(0,2).toLowerCase();
+        const isTR = userLang === 'tr';
+        
+        const message = isTR 
+          ? `⚠️ ${count} tasarım sorunu tespit edildi (F12 > Console'da detaylar)`
+          : `⚠️ ${count} design issues detected (Details in F12 > Console)`;
+        
+        if (typeof viewportManager !== 'undefined') {
+          // Use the same notification system
+          const notification = document.createElement('div');
+          notification.className = 'viewport-notification';
+          notification.style.background = 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)';
+          notification.innerHTML = `
+            <span class="notification-icon">⚠️</span>
+            <span class="notification-text">${message}</span>
+          `;
+          
+          document.body.appendChild(notification);
+          
+          requestAnimationFrame(() => {
+            notification.classList.add('show');
+          });
+          
+          setTimeout(() => {
+            notification.classList.remove('show');
+            notification.classList.add('hide');
+            
+            setTimeout(() => {
+              if (notification.parentNode) {
+                notification.parentNode.removeChild(notification);
+              }
+            }, 400);
+          }, 5000);
+        }
+      }
+      
+      // Public methods
+      getMetrics() {
+        return this.metrics;
+      }
+      
+      forceCheck() {
+        this.checkResponsiveIssues();
+      }
+    }
+    
+    // Initialize performance monitor
+    const performanceMonitor = new ResponsivePerformanceMonitor();
+    window.performanceMonitor = performanceMonitor;
+    
     // Hackathon countdown logic
     // Set your hackathon start/end times (UTC+3 for Istanbul)
     const hackathonStart = new Date('2025-05-24T19:00:00+03:00');
@@ -1044,3 +2380,4 @@
     });
   </script>
 </body>
+</html>
