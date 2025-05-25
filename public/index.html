@@ -876,6 +876,105 @@
         transform: translateX(-50%) translateY(0);
       }
     }
+    
+    /* Hackathon Countdown and Calendar Button Responsive Design */
+    #hackathonCountdown {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    
+    #addToCalendarBtn {
+      background: #fbbf24;
+      color: #232946;
+      border: none;
+      border-radius: 6px;
+      padding: 10px 22px;
+      font-size: 1.13em;
+      cursor: pointer;
+      font-family: 'Montserrat', Arial, sans-serif;
+      box-shadow: 0 1px 4px rgba(251,191,36,0.07);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      white-space: nowrap;
+      min-height: 44px; /* Touch-friendly minimum size */
+    }
+    
+    #addToCalendarBtn:hover {
+      background: #f59e0b;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(251,191,36,0.25);
+    }
+    
+    #addToCalendarBtn:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 4px rgba(251,191,36,0.15);
+    }
+    
+    /* Mobile: Center the "Add to Calendar" button */
+    @media (max-width: 599px) {
+      #hackathonCountdown {
+        flex-direction: column;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        gap: 16px;
+      }
+      
+      #countdownText {
+        text-align: center;
+        width: 100%;
+      }
+      
+      #addToCalendarBtn {
+        width: auto;
+        margin: 0 auto;
+        padding: 12px 24px;
+        font-size: 1.1em;
+        min-width: 200px;
+        justify-self: center;
+        align-self: center;
+      }
+    }
+    
+    /* Extra small mobile */
+    @media (max-width: 375px) {
+      #hackathonCountdown {
+        padding: 12px 16px;
+        gap: 12px;
+      }
+      
+      #countdownText {
+        font-size: 1.8rem !important;
+        line-height: 1.1;
+      }
+      
+      #addToCalendarBtn {
+        padding: 10px 20px;
+        font-size: 1em;
+        min-width: 180px;
+      }
+    }
+    
+    /* Tablet: Improve layout */
+    @media (min-width: 600px) and (max-width: 767px) {
+      #hackathonCountdown {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+      
+      #countdownText {
+        flex: 1;
+        text-align: left;
+      }
+      
+      #addToCalendarBtn {
+        flex-shrink: 0;
+        margin-left: 16px;
+      }
+    }
   </style>
   <!-- Google Analytics (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-XSTTRGZS5N"></script>
@@ -931,9 +1030,9 @@
     </div>
   </div>
   <!-- Hackathon Countdown & Calendar -->
-  <div id="hackathonCountdown" style="max-width:950px;margin:0 auto 18px auto;padding:16px 18px 12px 18px;background:#fffbe6;border-radius:10px;box-shadow:0 2px 8px rgba(251,191,36,0.08);color:#7c6f00;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;">
+  <div id="hackathonCountdown" style="max-width:950px;margin:0 auto 18px auto;padding:16px 18px 12px 18px;background:#fffbe6;border-radius:10px;box-shadow:0 2px 8px rgba(251,191,36,0.08);color:#7c6f00;">
     <div id="countdownText" style="font-weight:700;font-size:2.1rem;letter-spacing:1px;line-height:1.2;"></div>
-    <button id="addToCalendarBtn" style="background:#fbbf24;color:#232946;border:none;border-radius:6px;padding:10px 22px;font-size:1.13em;cursor:pointer;font-family:'Montserrat',Arial,sans-serif;box-shadow:0 1px 4px rgba(251,191,36,0.07);transition:background 0.2s;">
+    <button id="addToCalendarBtn">
       📅 <span id="calendarBtnText">Add to Calendar</span>
     </button>
   </div>
