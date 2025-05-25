@@ -1,0 +1,1690 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proje Teslim Kontrol Formu - Cube Incubation Mobile Hackathon 2025</title>
+    
+    <!-- Firebase SDK v9 (modular) -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js';
+        import { getAnalytics, logEvent } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-analytics.js';
+        
+        const firebaseConfig = {
+            apiKey: "AIzaSyCF0l6BNmJZI-UdlKKGjOPqhiJB_9bpg_s",
+            authDomain: "cube-incubation-mobile-hackathon.firebaseapp.com",
+            projectId: "cube-incubation-mobile-hackathon",
+            storageBucket: "cube-incubation-mobile-hackathon.appspot.com",
+            messagingSenderId: "123456789012",
+            appId: "1:123456789012:web:abcdef123456789012345",
+            measurementId: "G-ABC123DEF4"
+        };
+        
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        
+        // Log page view
+        logEvent(analytics, 'page_view', {
+            page_title: 'Control Form',
+            page_location: window.location.href
+        });
+        
+        window.analytics = analytics;
+    </script>
+    
+    <!-- Print styles for PDF export -->
+    <style media="print">
+        @page {
+            margin: 20mm;
+            size: A4;
+        }
+        
+        body {
+            background: white !important;
+            color: black !important;
+            font-size: 12pt;
+            line-height: 1.4;
+        }
+        
+        .container {
+            background: white !important;
+            box-shadow: none !important;
+            border: none !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            max-width: none !important;
+        }
+        
+        .header-section {
+            border-bottom: 2px solid #333 !important;
+            margin-bottom: 20pt !important;
+            page-break-inside: avoid;
+        }
+        
+        .back-button {
+            display: none !important;
+        }
+        
+        .page-title {
+            text-align: center !important;
+            font-size: 18pt !important;
+            font-weight: bold !important;
+            color: black !important;
+        }
+        
+        .progress-container,
+        .stats-container {
+            page-break-inside: avoid;
+            border: 1px solid #333 !important;
+            background: white !important;
+            margin-bottom: 15pt !important;
+        }
+        
+        .control-section {
+            page-break-inside: avoid;
+            border: 1px solid #333 !important;
+            background: white !important;
+            margin-bottom: 15pt !important;
+            padding: 10pt !important;
+        }
+        
+        .section-title {
+            font-size: 14pt !important;
+            font-weight: bold !important;
+            color: black !important;
+            border-bottom: 1px solid #333 !important;
+            padding-bottom: 5pt !important;
+            margin-bottom: 10pt !important;
+        }
+        
+        .checklist-item {
+            border-bottom: 1px solid #ccc !important;
+            padding: 5pt 0 !important;
+            page-break-inside: avoid;
+        }
+        
+        .checkbox {
+            border: 2px solid #333 !important;
+            background: white !important;
+        }
+        
+        .checkbox.checked {
+            background: #333 !important;
+        }
+        
+        .checkbox.checked::after {
+            color: white !important;
+        }
+        
+        .priority-high {
+            border-left: 4px solid #000 !important;
+        }
+        
+        .priority-medium {
+            border-left: 4px solid #666 !important;
+        }
+        
+        .priority-low {
+            border-left: 4px solid #999 !important;
+        }
+        
+        .form-input,
+        .form-textarea {
+            border: 1px solid #333 !important;
+            background: white !important;
+            padding: 5pt !important;
+        }
+        
+        .action-buttons {
+            display: none !important;
+        }
+        
+        .status-message {
+            border: 2px solid #333 !important;
+            background: white !important;
+            color: black !important;
+            padding: 10pt !important;
+            margin: 10pt 0 !important;
+        }
+        
+        .stat-card {
+            border: 1px solid #333 !important;
+            background: white !important;
+            text-align: center !important;
+            padding: 10pt !important;
+        }
+        
+        .stat-number {
+            font-size: 18pt !important;
+            font-weight: bold !important;
+            color: black !important;
+        }
+        
+        .stat-label {
+            font-size: 10pt !important;
+            color: #666 !important;
+        }
+        
+        /* Print-specific content */
+        .print-header {
+            display: block !important;
+            text-align: center;
+            margin-bottom: 20pt;
+            border-bottom: 2px solid #333;
+            padding-bottom: 10pt;
+        }
+        
+        .print-footer {
+            display: block !important;
+            position: fixed;
+            bottom: 20mm;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 10pt;
+            color: #666;
+        }
+        
+        .print-date {
+            display: block !important;
+            text-align: right;
+            font-size: 10pt;
+            color: #666;
+            margin-bottom: 10pt;
+        }
+    </style>
+    
+    <!-- Print-only content (hidden on screen) -->
+    <div class="print-header" style="display: none;">
+        <h1>Proje Kontrol Raporu</h1>
+        <h2>Cube Incubation Mobile Hackathon 2025</h2>
+    </div>
+    
+    <div class="print-date" style="display: none;">
+        Rapor Tarihi: <span id="printDate"></span>
+    </div>
+    
+    <div class="print-footer" style="display: none;">
+        Cube Incubation Mobile Hackathon 2025 - Proje Kontrol Formu
+    </div>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', Arial, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #ffffff 50%, #f1f5f9 100%);
+            color: #1e293b;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(15, 23, 42, 0.08);
+            margin-top: 20px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(226, 232, 240, 0.5);
+        }
+        
+        /* Header with Back Button */
+        .header-section {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid rgba(163, 188, 247, 0.2);
+        }
+        
+        .back-button {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 12px 16px;
+            cursor: pointer;
+            font-size: 1.2em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-right: 20px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+            min-height: 44px;
+        }
+        
+        .back-button:hover {
+            background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4);
+        }
+        
+        .back-button:active {
+            transform: translateY(0);
+        }
+        
+        .back-arrow {
+            font-size: 1.1em;
+            transition: transform 0.3s ease;
+        }
+        
+        .back-button:hover .back-arrow {
+            transform: translateX(-3px);
+        }
+        
+        .page-title {
+            flex: 1;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1e293b;
+            text-align: center;
+        }
+        
+        /* Progress Bar */
+        .progress-container {
+            margin-bottom: 30px;
+            background: rgba(248, 250, 252, 0.8);
+            border-radius: 10px;
+            padding: 20px;
+            border: 1px solid rgba(226, 232, 240, 0.6);
+        }
+        
+        .progress-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #475569;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: rgba(241, 245, 249, 0.9);
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(15, 23, 42, 0.08);
+            border: 1px solid rgba(226, 232, 240, 0.4);
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #10b981 0%, #059669 100%);
+            width: 0%;
+            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 6px;
+        }
+        
+        .progress-text {
+            margin-top: 8px;
+            font-size: 0.9rem;
+            color: #6b7280;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        /* Control Form Sections */
+        .control-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
+            border: 1px solid rgba(226, 232, 240, 0.4);
+            transition: all 0.3s ease;
+        }
+        
+        .control-section:hover {
+            box-shadow: 0 4px 16px rgba(15, 23, 42, 0.1);
+            border-color: rgba(148, 163, 184, 0.4);
+        }
+        
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section-icon {
+            font-size: 1.4em;
+            color: #3b82f6;
+        }
+        
+        /* Checklist Items */
+        .checklist {
+            list-style: none;
+        }
+        
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(224, 231, 255, 0.5);
+            transition: all 0.3s ease;
+        }
+        
+        .checklist-item:last-child {
+            border-bottom: none;
+        }
+        
+        .checklist-item:hover {
+            background: rgba(224, 231, 255, 0.2);
+            border-radius: 8px;
+            padding-left: 8px;
+            padding-right: 8px;
+        }
+        
+        .checkbox-container {
+            margin-right: 12px;
+            margin-top: 2px;
+        }
+        
+        .checkbox {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #d1d5db;
+            border-radius: 4px;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+            min-width: 20px;
+        }
+        
+        .checkbox.checked {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            border-color: #059669;
+        }
+        
+        .checkbox.checked::after {
+            content: '✓';
+            position: absolute;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .checklist-content {
+            flex: 1;
+        }
+        
+        .checklist-title {
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 4px;
+            line-height: 1.4;
+        }
+        
+        .checklist-description {
+            font-size: 0.9rem;
+            color: #6b7280;
+            line-height: 1.4;
+        }
+        
+        .priority-high {
+            border-left: 4px solid #ef4444;
+            padding-left: 12px;
+        }
+        
+        .priority-medium {
+            border-left: 4px solid #f59e0b;
+            padding-left: 12px;
+        }
+        
+        .priority-low {
+            border-left: 4px solid #10b981;
+            padding-left: 12px;
+        }
+        
+        /* Input Fields */
+        .form-group {
+            margin-bottom: 16px;
+        }
+        
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 6px;
+        }
+        
+        .form-input,
+        .form-textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: white;
+        }
+        
+        .form-input:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 14px 28px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            min-height: 44px;
+            font-family: 'Montserrat', Arial, sans-serif;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(107, 114, 128, 0.3);
+        }
+        
+        .btn-secondary:hover {
+            background: linear-gradient(135deg, #4b5563 0%, #374151 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(107, 114, 128, 0.4);
+        }
+        
+        .btn-warning {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+        }
+        
+        .btn-warning:hover {
+            background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(245, 158, 11, 0.4);
+        }
+        
+        /* Status Messages */
+        .status-message {
+            padding: 16px;
+            border-radius: 10px;
+            margin: 16px 0;
+            font-weight: 500;
+            display: none;
+        }
+        
+        .status-success {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            border: 1px solid #10b981;
+            color: #065f46;
+        }
+        
+        .status-warning {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border: 1px solid #f59e0b;
+            color: #92400e;
+        }
+        
+        .status-error {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            border: 1px solid #ef4444;
+            color: #991b1b;
+        }
+        
+        /* Statistics */
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(120, 120, 180, 0.08);
+            border: 1px solid rgba(163, 188, 247, 0.15);
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(120, 120, 180, 0.12);
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #3b82f6;
+            line-height: 1;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: #6b7280;
+            margin-top: 4px;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                padding: 16px;
+                border-radius: 12px;
+            }
+            
+            .header-section {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+            }
+            
+            .back-button {
+                margin-right: 0;
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .page-title {
+                text-align: left;
+                font-size: 1.5rem;
+            }
+            
+            .control-section {
+                padding: 16px;
+            }
+            
+            .section-title {
+                font-size: 1.2rem;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+            
+            .stats-container {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+            
+            .stat-number {
+                font-size: 2rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header-section {
+                margin-bottom: 20px;
+            }
+            
+            .page-title {
+                font-size: 1.3rem;
+            }
+            
+            .section-title {
+                font-size: 1.1rem;
+            }
+            
+            .checklist-item {
+                padding: 10px 0;
+            }
+            
+            .stats-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                transition: none !important;
+                animation: none !important;
+            }
+        }
+        
+        /* Dark mode support - REMOVED to force light theme */
+        /* All content will use light theme only */
+        
+        /* Additional light theme reinforcement */
+        body {
+            background: linear-gradient(135deg, #f8fafc 0%, #ffffff 50%, #f1f5f9 100%) !important;
+            color: #1e293b !important;
+        }
+        
+        .container {
+            background: rgba(255, 255, 255, 0.98) !important;
+            color: #1e293b !important;
+        }
+        
+        .control-section {
+            background: rgba(255, 255, 255, 0.95) !important;
+            border-color: rgba(226, 232, 240, 0.4) !important;
+            color: #1e293b !important;
+        }
+        
+        .section-title {
+            color: #1e293b !important;
+        }
+        
+        .checklist-title {
+            color: #374151 !important;
+        }
+        
+        .checklist-description {
+            color: #6b7280 !important;
+        }
+        
+        .form-label {
+            color: #374151 !important;
+        }
+        
+        .form-input,
+        .form-textarea {
+            background: white !important;
+            color: #1e293b !important;
+            border-color: #d1d5db !important;
+        }
+        
+        /* Scroll to top button */
+        .scroll-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 56px;
+            height: 56px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 16px rgba(59, 130, 246, 0.3);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .scroll-to-top:hover {
+            background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+        }
+        
+        .scroll-to-top:active {
+            transform: translateY(0);
+        }
+        
+        .scroll-to-top.show {
+            display: flex;
+            animation: slideInUp 0.3s ease-out;
+        }
+        
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Highlight animation for incomplete tasks */
+        .checklist-item.highlight-incomplete {
+            animation: highlightPulse 2s ease-in-out;
+            border-left: 4px solid #ef4444 !important;
+            background: rgba(239, 68, 68, 0.1) !important;
+            border-radius: 8px;
+            padding: 16px 12px !important;
+        }
+        
+        @keyframes highlightPulse {
+            0%, 100% {
+                background: rgba(239, 68, 68, 0.1);
+                border-left-color: #ef4444;
+            }
+            50% {
+                background: rgba(239, 68, 68, 0.2);
+                border-left-color: #dc2626;
+            }
+        }
+        
+        /* Smooth scroll behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Enhanced responsive design */
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                padding: 15px;
+                border-radius: 12px;
+            }
+            
+            .header-section {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 15px;
+            }
+            
+            .back-button {
+                align-self: flex-start;
+                margin-right: 0;
+            }
+            
+            .page-title {
+                text-align: left;
+                font-size: 1.5rem;
+            }
+            
+            .stats-container {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+            
+            .stat-card {
+                padding: 15px;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+                gap: 12px;
+            }
+            
+            .btn {
+                width: 100%;
+                padding: 16px 20px;
+                font-size: 1rem;
+            }
+            
+            .scroll-to-top {
+                bottom: 20px;
+                right: 20px;
+                width: 48px;
+                height: 48px;
+                font-size: 1.3rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                margin: 5px;
+                padding: 12px;
+            }
+            
+            .page-title {
+                font-size: 1.3rem;
+            }
+            
+            .progress-container {
+                padding: 15px;
+            }
+            
+            .control-section {
+                padding: 18px;
+            }
+            
+            .section-title {
+                font-size: 1.2rem;
+            }
+            
+            .checklist-item {
+                padding: 10px 0;
+            }
+            
+            .checkbox {
+                width: 18px;
+                height: 18px;
+            }
+            
+            .scroll-to-top {
+                width: 44px;
+                height: 44px;
+                font-size: 1.2rem;
+                bottom: 15px;
+                right: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header with Back Button -->
+        <div class="header-section">
+            <button class="back-button" onclick="goBack()">
+                <span class="back-arrow">←</span>
+                <span>Ana Sayfaya Dön</span>
+            </button>
+            <h1 class="page-title">Proje Teslim Kontrol Formu</h1>
+        </div>
+        
+        <!-- Progress Section -->
+        <div class="progress-container">
+            <div class="progress-title">Tamamlanma Durumu</div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="progress-text">
+                <span id="progressText">0 / 0 görev tamamlandı</span>
+                <span id="progressPercent">0%</span>
+            </div>
+        </div>
+        
+        <!-- Statistics -->
+        <div class="stats-container">
+            <div class="stat-card">
+                <div class="stat-number" id="totalTasks">0</div>
+                <div class="stat-label">Toplam Görev</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="completedTasks">0</div>
+                <div class="stat-label">Tamamlanan</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="remainingTasks">0</div>
+                <div class="stat-label">Kalan</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="completionRate">0%</div>
+                <div class="stat-label">Tamamlanma Oranı</div>
+            </div>
+        </div>
+        
+        <!-- Status Messages -->
+        <div id="statusMessage" class="status-message"></div>
+        
+        <!-- Project Information Section -->
+        <div class="control-section">
+            <h2 class="section-title">
+                <span class="section-icon">📋</span>
+                Proje Bilgileri
+            </h2>
+            <div class="form-group">
+                <label class="form-label" for="projectName">Proje Adı *</label>
+                <input type="text" id="projectName" class="form-input" placeholder="Proje adınızı girin" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="teamName">Takım Adı *</label>
+                <input type="text" id="teamName" class="form-input" placeholder="Takım adınızı girin" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="teamMembers">Takım Üyeleri *</label>
+                <textarea id="teamMembers" class="form-textarea" placeholder="Takım üyelerinin isimlerini satır satır yazın" required></textarea>
+            </div>
+        </div>
+        
+        <!-- Technical Requirements -->
+        <div class="control-section">
+            <h2 class="section-title">
+                <span class="section-icon">⚙️</span>
+                Teknik Gereksinimler
+            </h2>
+            <ul class="checklist">
+                <li class="checklist-item priority-high">
+                    <div class="checkbox-container">
+                        <div class="checkbox" data-task="mobile-app"></div>
+                    </div>
+                    <div class="checklist-content">
+                        <div class="checklist-title">Mobil uygulama geliştirildi</div>
+                        <div class="checklist-description">React Native, Flutter, Swift, Kotlin veya hibrit teknolojiler kullanılarak mobil uygulama oluşturuldu</div>
+                    </div>
+                </li>
+                <li class="checklist-item priority-high">
+                    <div class="checkbox-container">
+                        <div class="checkbox" data-task="cross-platform"></div>
+                    </div>
+                    <div class="checklist-content">
+                        <div class="checklist-title">Çoklu platform desteği</div>
+                        <div class="checklist-description">Uygulama en az bir mobil platformda (iOS veya Android) çalışıyor</div>
+                    </div>
+                </li>
+                <li class="checklist-item priority-medium">
+                    <div class="checkbox-container">
+                        <div class="checkbox" data-task="responsive-design"></div>
+                    </div>
+                    <div class="checklist-content">
+                        <div class="checklist-title">Responsive tasarım</div>
+                        <div class="checklist-description">Farklı ekran boyutlarında uyumlu çalışan tasarım</div>
+                    </div>
+                </li>
+                <li class="checklist-item priority-medium">
+                    <div class="checkbox-container">
+                        <div class="checkbox" data-task="user-experience"></div>
+                    </div>
+                    <div class="checklist-content">
+                        <div class="checklist-title">Kullanıcı deneyimi optimizasyonu</div>
+                        <div class="checklist-description">Sezgisel ve kullanıcı dostu arayüz tasarımı</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        
+        <!-- Code and Documentation -->
+        <div class="control-section">
+            <h2 class="section-title">
+                <span class="section-icon">📝</span>
+                Kod ve Dokümantasyon
+            </h2>
+            <ul class="checklist">
+                <li class="checklist-item priority-high">
+                    <div class="checkbox-container">
+                        <div class="checkbox" data-task="github-repo"></div>
+                    </div>
+                    <div class="checklist-content">
+                        <div class="checklist-title">GitHub repository oluşturuldu</div>
+                        <div class="checklist-description">Proje kodu GitHub'da public repository olarak paylaşıldı</div>
+                    </div>
+                </li>
+                <li class="checklist-item priority-high">
+                    <div class="checkbox-container">
+                        <div class="checkbox" data-task="readme-file"></div>
+                    </div>
+                    <div class="checklist-content">
+                        <div class="checklist-title">README.md dosyası hazırlandı</div>
+                        <div class="checklist-description">Proje açıklaması, kurulum talimatları ve kullanım kılavuzu</div>
+                    </div>
+                </li>
+                <li class="checklist-item priority-medium">
+                    <div class="checkbox-container">
+                        <div class="checkbox" data-task="code-comments"></div>
+                    </div>
+                    <div class="checklist-content">
+                        <div class="checklist-title">Kod yorumları eklendi</div>
+                        <div class="checklist-description">Önemli fonksiyonlar ve algoritmalar açıklanmış</div>
+                    </div>
+                </li>
+                <li class="checklist-item priority-low">
+                    <div class="checkbox-container">
+                        <div class="checkbox" data-task="api-docs"></div>
+                    </div>
+                    <div class="checklist-content">
+                        <div class="checklist-title">API dokümantasyonu</div>
+                        <div class="checklist-description">Kullanılan API'ler ve servislerin dokümantasyonu</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        
+        <!-- Testing and Quality -->
+        <div class="control-section">
+            <h2 class="section-title">
+                <span class="section-icon">🧪</span>
+                Test ve Kalite
+            </h2>
+            <ul class="checklist">
+                <li class="checklist-item priority-high">
+                    <div class="checkbox-container">
+                        <div class="checkbox" data-task="functionality-test"></div>
+                    </div>
+                    <div class="checklist-content">
+                        <div class="checklist-title">Fonksiyonellik testleri</div>
+                        <div class="checklist-description">Tüm temel özellikler test edildi ve çalışıyor</div>
+                    </div>
+                </li>
+                <li class="checklist-item priority-medium">
+                    <div class="checkbox-container">
+                        <div class="checkbox" data-task="device-test"></div>
+                    </div>
+                    <div class="checklist-content">
+                        <div class="checklist-title">Farklı cihazlarda test</div>
+                        <div class="checklist-description">En az 2 farklı cihaz/simülatörde test edildi</div>
+                    </div>
+                </li>
+                <li class="checklist-item priority-medium">
+                    <div class="checkbox-container">
+                        <div class="checkbox" data-task="performance-test"></div>
+                    </div>
+                    <div class="checklist-content">
+                        <div class="checklist-title">Performans optimizasyonu</div>
+                        <div class="checklist-description">Uygulama hızı ve kaynak kullanımı optimize edildi</div>
+                    </div>
+                </li>
+                <li class="checklist-item priority-low">
+                    <div class="checkbox-container">
+                        <div class="checkbox" data-task="error-handling"></div>
+                    </div>
+                    <div class="checklist-content">
+                        <div class="checklist-title">Hata yönetimi</div>
+                        <div class="checklist-description">Kullanıcı dostu hata mesajları ve exception handling</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        
+        <!-- Presentation and Demo -->
+        <div class="control-section">
+            <h2 class="section-title">
+                <span class="section-icon">🎤</span>
+                Sunum ve Demo
+            </h2>
+            <ul class="checklist">
+                <li class="checklist-item priority-high">
+                    <div class="checkbox-container">
+                        <div class="checkbox" data-task="demo-video"></div>
+                    </div>
+                    <div class="checklist-content">
+                        <div class="checklist-title">Demo video hazırlandı</div>
+                        <div class="checklist-description">5 dakikalık proje tanıtım videosu (MP4 format, max 100MB)</div>
+                    </div>
+                </li>
+                <li class="checklist-item priority-high">
+                    <div class="checkbox-container">
+                        <div class="checkbox" data-task="presentation-slides"></div>
+                    </div>
+                    <div class="checklist-content">
+                        <div class="checklist-title">Sunum slaytları</div>
+                        <div class="checklist-description">10-15 slaytlık proje sunumu hazırlandı</div>
+                    </div>
+                </li>
+                <li class="checklist-item priority-medium">
+                    <div class="checkbox-container">
+                        <div class="checkbox" data-task="pitch-practice"></div>
+                    </div>
+                    <div class="checklist-content">
+                        <div class="checklist-title">Pitch pratiği yapıldı</div>
+                        <div class="checklist-description">Takım üyeleri sunum pratiği yaptı</div>
+                    </div>
+                </li>
+                <li class="checklist-item priority-low">
+                    <div class="checkbox-container">
+                        <div class="checkbox" data-task="demo-scenarios"></div>
+                    </div>
+                    <div class="checklist-content">
+                        <div class="checklist-title">Demo senaryoları</div>
+                        <div class="checklist-description">Farklı kullanım senaryoları için demo planı</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        
+        <!-- Final Submission -->
+        <div class="control-section">
+            <h2 class="section-title">
+                <span class="section-icon">🚀</span>
+                Final Teslim
+            </h2>
+            <ul class="checklist">
+                <li class="checklist-item priority-high">
+                    <div class="checkbox-container">
+                        <div class="checkbox" data-task="all-files-ready"></div>
+                    </div>
+                    <div class="checklist-content">
+                        <div class="checklist-title">Tüm dosyalar hazır</div>
+                        <div class="checklist-description">Kod, dokümantasyon, video ve sunum dosyaları tamamlandı</div>
+                    </div>
+                </li>
+                <li class="checklist-item priority-high">
+                    <div class="checkbox-container">
+                        <div class="checkbox" data-task="submission-form"></div>
+                    </div>
+                    <div class="checklist-content">
+                        <div class="checklist-title">Teslim formu dolduruldu</div>
+                        <div class="checklist-description">Resmi teslim formu eksiksiz dolduruldu</div>
+                    </div>
+                </li>
+                <li class="checklist-item priority-medium">
+                    <div class="checkbox-container">
+                        <div class="checkbox" data-task="backup-created"></div>
+                    </div>
+                    <div class="checklist-content">
+                        <div class="checklist-title">Yedek kopyalar oluşturuldu</div>
+                        <div class="checklist-description">Tüm proje dosyalarının yedek kopyaları alındı</div>
+                    </div>
+                </li>
+                <li class="checklist-item priority-low">
+                    <div class="checkbox-container">
+                        <div class="checkbox" data-task="team-feedback"></div>
+                    </div>
+                    <div class="checklist-content">
+                        <div class="checklist-title">Takım değerlendirmesi</div>
+                        <div class="checklist-description">Takım içi değerlendirme ve geri bildirim süreci tamamlandı</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        
+        <!-- Notes Section -->
+        <div class="control-section">
+            <h2 class="section-title">
+                <span class="section-icon">📝</span>
+                Notlar ve Ek Bilgiler
+            </h2>
+            <div class="form-group">
+                <label class="form-label" for="projectNotes">Proje Notları</label>
+                <textarea id="projectNotes" class="form-textarea" placeholder="Özel notlar, zorluklarla karşılaştığınız durumlar, çözüm önerileri vs."></textarea>
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="technicalChallenges">Teknik Zorluklar</label>
+                <textarea id="technicalChallenges" class="form-textarea" placeholder="Proje geliştirme sürecinde karşılaştığınız teknik zorluklar ve çözümler"></textarea>
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="futureImprovements">Gelecekteki Geliştirmeler</label>
+                <textarea id="futureImprovements" class="form-textarea" placeholder="Projeyi daha da geliştirmek için planladığınız özellikler"></textarea>
+            </div>
+        </div>
+        
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <button class="btn btn-primary" onclick="controlCheck()">
+                🔍 Kontrol Et
+            </button>
+            <button class="btn btn-secondary" onclick="generatePDF()">
+                📄 PDF Olarak Kaydet
+            </button>
+        </div>
+    </div>
+    
+    <!-- Scroll to Top Button -->
+    <button class="scroll-to-top" id="scrollToTopBtn" onclick="scrollToTop()">
+        ↑
+    </button>
+    
+    <script>
+        // Form state management
+        let formData = {
+            projectInfo: {},
+            checklistItems: {},
+            notes: {}
+        };
+        
+        // Initialize the form
+        document.addEventListener('DOMContentLoaded', function() {
+            loadSavedProgress();
+            updateProgress();
+            setupEventListeners();
+            setupScrollToTop();
+        });
+        
+        function setupEventListeners() {
+            // Checkbox listeners
+            document.querySelectorAll('.checkbox').forEach(checkbox => {
+                checkbox.addEventListener('click', function() {
+                    toggleCheckbox(this);
+                    updateProgress();
+                    saveToLocalStorage();
+                });
+            });
+            
+            // Form input listeners
+            document.querySelectorAll('.form-input, .form-textarea').forEach(input => {
+                input.addEventListener('input', function() {
+                    saveToLocalStorage();
+                });
+            });
+        }
+        
+        // Scroll to Top functionality
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+        
+        function setupScrollToTop() {
+            const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+            
+            // Show/hide button based on scroll position
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    scrollToTopBtn.classList.add('show');
+                } else {
+                    scrollToTopBtn.classList.remove('show');
+                }
+            });
+        }
+        
+        function toggleCheckbox(checkbox) {
+            const taskId = checkbox.getAttribute('data-task');
+            const isChecked = checkbox.classList.contains('checked');
+            
+            if (isChecked) {
+                checkbox.classList.remove('checked');
+                formData.checklistItems[taskId] = false;
+            } else {
+                checkbox.classList.add('checked');
+                formData.checklistItems[taskId] = true;
+            }
+        }
+        
+        function updateProgress() {
+            const checkboxes = document.querySelectorAll('.checkbox');
+            const totalTasks = checkboxes.length;
+            const completedTasks = document.querySelectorAll('.checkbox.checked').length;
+            const remainingTasks = totalTasks - completedTasks;
+            const completionRate = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
+            
+            // Update progress bar
+            const progressFill = document.getElementById('progressFill');
+            progressFill.style.width = completionRate + '%';
+            
+            // Update progress text
+            document.getElementById('progressText').textContent = `${completedTasks} / ${totalTasks} görev tamamlandı`;
+            document.getElementById('progressPercent').textContent = `${completionRate}%`;
+            
+            // Update statistics
+            document.getElementById('totalTasks').textContent = totalTasks;
+            document.getElementById('completedTasks').textContent = completedTasks;
+            document.getElementById('remainingTasks').textContent = remainingTasks;
+            document.getElementById('completionRate').textContent = `${completionRate}%`;
+            
+            // Update progress status message
+            updateStatusMessage(completionRate);
+        }
+        
+        function updateStatusMessage(completionRate) {
+            const statusMessage = document.getElementById('statusMessage');
+            statusMessage.style.display = 'block';
+            
+            if (completionRate === 100) {
+                statusMessage.className = 'status-message status-success';
+                statusMessage.textContent = '🎉 Tebrikler! Tüm görevleri tamamladınız. Projenizi teslim etmeye hazırsınız!';
+            } else if (completionRate >= 75) {
+                statusMessage.className = 'status-message status-success';
+                statusMessage.textContent = '✅ Harika ilerleme! Projeniz neredeyse tamamlanmış durumda.';
+            } else if (completionRate >= 50) {
+                statusMessage.className = 'status-message status-warning';
+                statusMessage.textContent = '⚠️ İyi gidiyorsunuz! Yarıdan fazla görevi tamamladınız.';
+            } else if (completionRate > 0) {
+                statusMessage.className = 'status-message status-warning';
+                statusMessage.textContent = '📝 Başlangıç yaptınız! Tamamlanacak daha çok görev var.';
+            } else {
+                statusMessage.style.display = 'none';
+            }
+        }
+        
+        function saveToLocalStorage() {
+            // Save project info
+            formData.projectInfo = {
+                projectName: document.getElementById('projectName').value,
+                teamName: document.getElementById('teamName').value,
+                teamMembers: document.getElementById('teamMembers').value
+            };
+            
+            // Save notes
+            formData.notes = {
+                projectNotes: document.getElementById('projectNotes').value,
+                technicalChallenges: document.getElementById('technicalChallenges').value,
+                futureImprovements: document.getElementById('futureImprovements').value
+            };
+            
+            localStorage.setItem('hackathonControlForm', JSON.stringify(formData));
+        }
+        
+        function loadSavedProgress() {
+            const saved = localStorage.getItem('hackathonControlForm');
+            if (saved) {
+                try {
+                    formData = JSON.parse(saved);
+                    
+                    // Restore project info
+                    if (formData.projectInfo) {
+                        document.getElementById('projectName').value = formData.projectInfo.projectName || '';
+                        document.getElementById('teamName').value = formData.projectInfo.teamName || '';
+                        document.getElementById('teamMembers').value = formData.projectInfo.teamMembers || '';
+                    }
+                    
+                    // Restore checklist items
+                    if (formData.checklistItems) {
+                        Object.keys(formData.checklistItems).forEach(taskId => {
+                            if (formData.checklistItems[taskId]) {
+                                const checkbox = document.querySelector(`[data-task="${taskId}"]`);
+                                if (checkbox) {
+                                    checkbox.classList.add('checked');
+                                }
+                            }
+                        });
+                    }
+                    
+                    // Restore notes
+                    if (formData.notes) {
+                        document.getElementById('projectNotes').value = formData.notes.projectNotes || '';
+                        document.getElementById('technicalChallenges').value = formData.notes.technicalChallenges || '';
+                        document.getElementById('futureImprovements').value = formData.notes.futureImprovements || '';
+                    }
+                } catch (e) {
+                    console.error('Error loading saved progress:', e);
+                }
+            }
+        }
+        
+        function saveProgress() {
+            saveToLocalStorage();
+            
+            // Show success message
+            const statusMessage = document.getElementById('statusMessage');
+            statusMessage.className = 'status-message status-success';
+            statusMessage.textContent = '💾 İlerlemeniz başarıyla kaydedildi!';
+            statusMessage.style.display = 'block';
+            
+            // Hide message after 3 seconds
+            setTimeout(() => {
+                statusMessage.style.display = 'none';
+            }, 3000);
+            
+            // Log to analytics
+            if (window.analytics) {
+                logEvent(window.analytics, 'form_save', {
+                    form_name: 'control_form',
+                    completion_rate: document.getElementById('completionRate').textContent
+                });
+            }
+        }
+        
+        function resetForm() {
+            if (confirm('Formu sıfırlamak istediğinizden emin misiniz? Tüm veriler silinecektir.')) {
+                // Clear localStorage
+                localStorage.removeItem('hackathonControlForm');
+                
+                // Reset form data
+                formData = {
+                    projectInfo: {},
+                    checklistItems: {},
+                    notes: {}
+                };
+                
+                // Reset UI
+                document.querySelectorAll('.checkbox').forEach(checkbox => {
+                    checkbox.classList.remove('checked');
+                });
+                
+                document.querySelectorAll('.form-input, .form-textarea').forEach(input => {
+                    input.value = '';
+                });
+                
+                updateProgress();
+                
+                // Show reset message
+                const statusMessage = document.getElementById('statusMessage');
+                statusMessage.className = 'status-message status-warning';
+                statusMessage.textContent = '🔄 Form başarıyla sıfırlandı!';
+                statusMessage.style.display = 'block';
+                
+                setTimeout(() => {
+                    statusMessage.style.display = 'none';
+                }, 3000);
+                
+                // Log to analytics
+                if (window.analytics) {
+                    logEvent(window.analytics, 'form_reset', {
+                        form_name: 'control_form'
+                    });
+                }
+            }
+        }
+        
+        function submitForm() {
+            const completionRate = parseInt(document.getElementById('completionRate').textContent);
+            const projectName = document.getElementById('projectName').value;
+            const teamName = document.getElementById('teamName').value;
+            
+            if (!projectName || !teamName) {
+                alert('Proje adı ve takım adı alanları zorunludur.');
+                return;
+            }
+            
+            if (confirm('Projenizi teslim etmek istediğinizden emin misiniz? Bu işlem geri alınamaz.')) {
+                // Simulate submission process
+                const statusMessage = document.getElementById('statusMessage');
+                statusMessage.className = 'status-message status-success';
+                statusMessage.textContent = '🚀 Proje teslimi başarıyla tamamlandı! Başarılar dileriz!';
+                statusMessage.style.display = 'block';
+                
+                // Log to analytics
+                if (window.analytics) {
+                    logEvent(window.analytics, 'form_submit', {
+                        form_name: 'control_form',
+                        project_name: projectName,
+                        team_name: teamName,
+                        completion_rate: completionRate
+                    });
+                }
+                
+                // Disable form after submission
+                setTimeout(() => {
+                    document.querySelectorAll('.btn').forEach(btn => {
+                        if (btn.onclick !== goBack) {
+                            btn.disabled = true;
+                            btn.style.opacity = '0.5';
+                        }
+                    });
+                }, 1000);
+            }
+        }
+        
+        function goBack() {
+            if (window.analytics) {
+                logEvent(window.analytics, 'navigation', {
+                    from: 'control_form',
+                    to: 'index'
+                });
+            }
+            
+            window.location.href = 'index.html';
+        }
+        
+        // New functionality for Control Check and PDF Generation
+        function controlCheck() {
+            // Scroll to top first
+            scrollToTop();
+            
+            const projectName = document.getElementById('projectName').value;
+            const teamName = document.getElementById('teamName').value;
+            const teamMembers = document.getElementById('teamMembers').value;
+            
+            // Check if required fields are filled
+            if (!projectName || !teamName || !teamMembers) {
+                const statusMessage = document.getElementById('statusMessage');
+                statusMessage.className = 'status-message status-error';
+                statusMessage.textContent = '❌ Hata: Proje adı, takım adı ve takım üyeleri alanları zorunludur!';
+                statusMessage.style.display = 'block';
+                
+                // Scroll to project info section
+                setTimeout(() => {
+                    const projectSection = document.querySelector('.control-section');
+                    if (projectSection) {
+                        projectSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        projectSection.style.animation = 'highlightPulse 2s ease-in-out';
+                    }
+                }, 500);
+                
+                setTimeout(() => {
+                    statusMessage.style.display = 'none';
+                }, 5000);
+                return;
+            }
+            
+            const completionRate = parseInt(document.getElementById('completionRate').textContent);
+            const totalTasks = parseInt(document.getElementById('totalTasks').textContent);
+            const completedTasks = parseInt(document.getElementById('completedTasks').textContent);
+            
+            // Find incomplete tasks and highlight them
+            const incompleteCheckboxes = document.querySelectorAll('.checkbox:not(.checked)');
+            const incompleteTasks = [];
+            
+            // Remove previous highlights
+            document.querySelectorAll('.checklist-item.highlight-incomplete').forEach(item => {
+                item.classList.remove('highlight-incomplete');
+            });
+            
+            // Add highlights to incomplete tasks
+            incompleteCheckboxes.forEach((checkbox, index) => {
+                const taskItem = checkbox.closest('.checklist-item');
+                const taskTitle = taskItem.querySelector('.checklist-title')?.textContent;
+                if (taskItem && taskTitle) {
+                    taskItem.classList.add('highlight-incomplete');
+                    incompleteTasks.push(taskTitle);
+                }
+            });
+            
+            // Generate detailed status report
+            let report = '';
+            const statusMessage = document.getElementById('statusMessage');
+            
+            if (completionRate === 100) {
+                statusMessage.className = 'status-message status-success';
+                report = `🎉 Mükemmel! Tüm görevleri tamamladınız (%${completionRate}). Proje teslim için tamamen hazır!`;
+            } else if (completionRate >= 75) {
+                statusMessage.className = 'status-message status-success';
+                report = `✅ Harika durumda! %${completionRate} tamamlandı. Kalan ${totalTasks - completedTasks} görev vurgulandı.`;
+            } else if (completionRate >= 50) {
+                statusMessage.className = 'status-message status-warning';
+                report = `⚠️ İyi ilerleme kaydediyorsunuz! %${completionRate} tamamlandı. Eksik görevler vurgulandı.`;
+            } else if (completionRate >= 25) {
+                statusMessage.className = 'status-message status-warning';
+                report = `📝 Başlangıç yapılmış (%${completionRate}). Daha çok çalışma gerekiyor. Eksik görevler vurgulandı.`;
+            } else {
+                statusMessage.className = 'status-message status-error';
+                report = `❌ Henüz çok az ilerleme kaydedilmiş (%${completionRate}). Acilen eksik görevleri tamamlayın!`;
+            }
+            
+            statusMessage.textContent = report;
+            statusMessage.style.display = 'block';
+            
+            // If there are incomplete tasks, scroll to the first one after a delay
+            if (incompleteCheckboxes.length > 0 && completionRate < 100) {
+                setTimeout(() => {
+                    const firstIncompleteTask = incompleteCheckboxes[0].closest('.checklist-item');
+                    if (firstIncompleteTask) {
+                        firstIncompleteTask.scrollIntoView({ 
+                            behavior: 'smooth', 
+                            block: 'center' 
+                        });
+                    }
+                }, 1500);
+                
+                // Remove highlights after 5 seconds
+                setTimeout(() => {
+                    document.querySelectorAll('.checklist-item.highlight-incomplete').forEach(item => {
+                        item.classList.remove('highlight-incomplete');
+                    });
+                }, 5000);
+            }
+            
+            // Hide message after 8 seconds
+            setTimeout(() => {
+                statusMessage.style.display = 'none';
+            }, 8000);
+            
+            // Log to analytics
+            if (window.analytics) {
+                logEvent(window.analytics, 'control_check', {
+                    form_name: 'control_form',
+                    project_name: projectName,
+                    team_name: teamName,
+                    completion_rate: completionRate,
+                    total_tasks: totalTasks,
+                    completed_tasks: completedTasks,
+                    incomplete_tasks: incompleteTasks.length
+                });
+            }
+            
+            // Save current state
+            saveToLocalStorage();
+        }
+        
+        function generatePDF() {
+            // Show loading message
+            const statusMessage = document.getElementById('statusMessage');
+            statusMessage.className = 'status-message status-warning';
+            statusMessage.textContent = '⏳ PDF raporu hazırlanıyor...';
+            statusMessage.style.display = 'block';
+            
+            // Update print date
+            const printDate = document.getElementById('printDate');
+            if (printDate) {
+                printDate.textContent = new Date().toLocaleDateString('tr-TR', {
+                    year: 'numeric',
+                    month: 'long', 
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+            }
+            
+            // Save current state before printing
+            saveToLocalStorage();
+            
+            // Small delay to show loading message, then trigger print
+            setTimeout(() => {
+                statusMessage.style.display = 'none';
+                
+                // Use browser's native print function for PDF generation
+                window.print();
+                
+                // Show success message after print dialog
+                setTimeout(() => {
+                    statusMessage.className = 'status-message status-success';
+                    statusMessage.textContent = '📄 PDF raporu için yazdırma penceresi açıldı. "PDF olarak kaydet" seçeneğini kullanabilirsiniz.';
+                    statusMessage.style.display = 'block';
+                    
+                    setTimeout(() => {
+                        statusMessage.style.display = 'none';
+                    }, 7000);
+                }, 500);
+                
+                // Log to analytics
+                if (window.analytics) {
+                    logEvent(window.analytics, 'pdf_print_requested', {
+                        form_name: 'control_form',
+                        project_name: document.getElementById('projectName').value,
+                        team_name: document.getElementById('teamName').value,
+                        completion_rate: document.getElementById('completionRate').textContent
+                    });
+                }
+            }, 800);
+        }
+        
+        // Auto-save every 30 seconds
+        setInterval(saveToLocalStorage, 30000);
+    </script>
+</body>
+</html>

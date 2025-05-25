@@ -901,15 +901,33 @@
       min-height: 44px; /* Touch-friendly minimum size */
     }
     
+    #controlFormBtn {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      white-space: nowrap;
+      min-height: 44px; /* Touch-friendly minimum size */
+      font-family: 'Montserrat', Arial, sans-serif;
+    }
+    
     #addToCalendarBtn:hover {
       background: #f59e0b;
       transform: translateY(-1px);
       box-shadow: 0 4px 12px rgba(251,191,36,0.25);
     }
     
+    #controlFormBtn:hover {
+      background: linear-gradient(135deg, #5a6fd8 0%, #6c5395 100%);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
+    }
+    
     #addToCalendarBtn:active {
       transform: translateY(0);
       box-shadow: 0 2px 4px rgba(251,191,36,0.15);
+    }
+    
+    #controlFormBtn:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 6px rgba(102, 126, 234, 0.2);
     }
     
     /* Mobile: Center the "Add to Calendar" button */
@@ -1032,9 +1050,14 @@
   <!-- Hackathon Countdown & Calendar -->
   <div id="hackathonCountdown" style="max-width:950px;margin:0 auto 18px auto;padding:16px 18px 12px 18px;background:#fffbe6;border-radius:10px;box-shadow:0 2px 8px rgba(251,191,36,0.08);color:#7c6f00;">
     <div id="countdownText" style="font-weight:700;font-size:2.1rem;letter-spacing:1px;line-height:1.2;"></div>
-    <button id="addToCalendarBtn">
-      📅 <span id="calendarBtnText">Add to Calendar</span>
-    </button>
+    <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 12px;">
+      <button id="addToCalendarBtn">
+        📅 <span id="calendarBtnText">Add to Calendar</span>
+      </button>
+      <button id="controlFormBtn" onclick="window.location.href='control-form.html'" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; padding: 12px 24px; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);">
+        📋 <span id="controlFormBtnText">Project Control Form</span>
+      </button>
+    </div>
   </div>
   <div class="container">
     <h1>📱 "Çözüm Sende" Hackathon - Rules and Submission Guide</h1>
@@ -2140,6 +2163,7 @@
     const countdownText = document.getElementById('countdownText');
     const addToCalendarBtn = document.getElementById('addToCalendarBtn');
     const calendarBtnText = document.getElementById('calendarBtnText');
+    const controlFormBtnText = document.getElementById('controlFormBtnText');
 
     // Language detection
     const userLang = (navigator.language || navigator.userLanguage || 'en').toLowerCase();
@@ -2153,6 +2177,7 @@
         ended: '✅ Hackathon ended.',
         calendarBtn: 'Add to Calendar',
         calendarLoading: 'Redirecting to your calendar...',
+        controlFormBtn: 'Project Control Form',
       },
       tr: {
         startsIn: (h, m, s) => `⏳ Hackathon başlıyor: <span style="color:#fbbf24">${h}:${m}:${s}</span><br><span style="font-size:1.1rem;font-weight:400;">(24 Mayıs 2025, 19:00)</span>`,
@@ -2160,10 +2185,12 @@
         ended: '✅ Hackathon sona erdi.',
         calendarBtn: 'Takvime Ekle',
         calendarLoading: 'Takviminize yönlendiriliyorsunuz...',
+        controlFormBtn: 'Proje Kontrol Formu',
       }
     };
     const t = isTR ? texts.tr : texts.en;
     calendarBtnText.textContent = t.calendarBtn;
+    controlFormBtnText.textContent = t.controlFormBtn;
 
     function pad(n) { return n < 10 ? '0' + n : n; }
 
