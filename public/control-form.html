@@ -209,6 +209,12 @@
     </div>
     
     <style>
+        :root {
+            --theme-primary: #007acc;
+            --theme-secondary: #005a9e;
+            --theme-accent: #4d9de0;
+        }
+        
         * {
             margin: 0;
             padding: 0;
@@ -507,15 +513,61 @@
         }
         
         .btn-primary {
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            background: linear-gradient(135deg, var(--theme-primary) 0%, var(--theme-secondary) 100%);
             color: white;
             box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
         }
         
         .btn-primary:hover {
-            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            background: linear-gradient(135deg, var(--theme-secondary) 0%, var(--theme-primary) 100%);
             transform: translateY(-2px);
             box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4);
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--theme-primary) 0%, var(--theme-secondary) 100%);
+            width: 0%;
+            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 6px;
+        }
+        
+        .checkbox.checked {
+            background: linear-gradient(135deg, var(--theme-primary) 0%, var(--theme-secondary) 100%);
+            border-color: var(--theme-secondary);
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--theme-primary);
+            line-height: 1;
+        }
+        
+        .scroll-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+            background: linear-gradient(135deg, var(--theme-primary) 0%, var(--theme-secondary) 100%);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 56px;
+            height: 56px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 16px rgba(59, 130, 246, 0.3);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .scroll-to-top:hover {
+            background: linear-gradient(135deg, var(--theme-secondary) 0%, var(--theme-primary) 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
         }
         
         .btn-secondary {
@@ -592,216 +644,106 @@
             box-shadow: 0 4px 16px rgba(120, 120, 180, 0.12);
         }
         
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: #3b82f6;
-            line-height: 1;
-        }
-        
         .stat-label {
             font-size: 0.9rem;
             color: #6b7280;
             margin-top: 4px;
         }
         
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .container {
-                margin: 10px;
-                padding: 16px;
-                border-radius: 12px;
-            }
-            
-            .header-section {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 16px;
-            }
-            
-            .back-button {
-                margin-right: 0;
-                width: 100%;
-                justify-content: center;
-            }
-            
-            .page-title {
-                text-align: left;
-                font-size: 1.5rem;
-            }
-            
-            .control-section {
-                padding: 16px;
-            }
-            
-            .section-title {
-                font-size: 1.2rem;
-            }
-            
-            .action-buttons {
-                flex-direction: column;
-            }
-            
-            .btn {
-                width: 100%;
-            }
-            
-            .stats-container {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 12px;
-            }
-            
-            .stat-number {
-                font-size: 2rem;
-            }
+        /* Priority Information Card Styles */
+        .priority-info-card {
+            background: linear-gradient(135deg, #f8fafc 0%, #ffffff 50%, #f1f5f9 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(226, 232, 240, 0.6);
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
+            transition: all 0.3s ease;
         }
         
-        @media (max-width: 480px) {
-            .header-section {
-                margin-bottom: 20px;
-            }
-            
-            .page-title {
-                font-size: 1.3rem;
-            }
-            
-            .section-title {
-                font-size: 1.1rem;
-            }
-            
-            .checklist-item {
-                padding: 10px 0;
-            }
-            
-            .stats-container {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-        /* Accessibility */
-        @media (prefers-reduced-motion: reduce) {
-            * {
-                transition: none !important;
-                animation: none !important;
-            }
-        }
-        
-        /* Dark mode support - REMOVED to force light theme */
-        /* All content will use light theme only */
-        
-        /* Additional light theme reinforcement */
-        body {
-            background: linear-gradient(135deg, #f8fafc 0%, #ffffff 50%, #f1f5f9 100%) !important;
-            color: #1e293b !important;
-        }
-        
-        .container {
-            background: rgba(255, 255, 255, 0.98) !important;
-            color: #1e293b !important;
-        }
-        
-        .control-section {
-            background: rgba(255, 255, 255, 0.95) !important;
-            border-color: rgba(226, 232, 240, 0.4) !important;
-            color: #1e293b !important;
-        }
-        
-        .section-title {
-            color: #1e293b !important;
-        }
-        
-        .checklist-title {
-            color: #374151 !important;
-        }
-        
-        .checklist-description {
-            color: #6b7280 !important;
-        }
-        
-        .form-label {
-            color: #374151 !important;
-        }
-        
-        .form-input,
-        .form-textarea {
-            background: white !important;
-            color: #1e293b !important;
-            border-color: #d1d5db !important;
-        }
-        
-        /* Scroll to top button */
-        .scroll-to-top {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            z-index: 1000;
-            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 56px;
-            height: 56px;
-            font-size: 1.5rem;
-            cursor: pointer;
-            box-shadow: 0 4px 16px rgba(59, 130, 246, 0.3);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            display: none;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .scroll-to-top:hover {
-            background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+        .priority-info-card:hover {
+            box-shadow: 0 6px 20px rgba(15, 23, 42, 0.1);
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
         }
         
-        .scroll-to-top:active {
-            transform: translateY(0);
-        }
-        
-        .scroll-to-top.show {
+        .priority-info-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 16px;
             display: flex;
-            animation: slideInUp 0.3s ease-out;
+            align-items: center;
+            gap: 10px;
         }
         
-        @keyframes slideInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .priority-info-icon {
+            font-size: 1.3em;
+            color: #3b82f6;
         }
         
-        /* Highlight animation for incomplete tasks */
-        .checklist-item.highlight-incomplete {
-            animation: highlightPulse 2s ease-in-out;
-            border-left: 4px solid #ef4444 !important;
-            background: rgba(239, 68, 68, 0.1) !important;
+        .priority-info-content {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .priority-info-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.7);
             border-radius: 8px;
-            padding: 16px 12px !important;
+            border: 1px solid rgba(226, 232, 240, 0.4);
+            transition: all 0.3s ease;
         }
         
-        @keyframes highlightPulse {
-            0%, 100% {
-                background: rgba(239, 68, 68, 0.1);
-                border-left-color: #ef4444;
-            }
-            50% {
-                background: rgba(239, 68, 68, 0.2);
-                border-left-color: #dc2626;
-            }
+        .priority-info-item:hover {
+            background: rgba(255, 255, 255, 0.9);
+            transform: translateX(5px);
+            border-color: rgba(59, 130, 246, 0.3);
         }
         
-        /* Smooth scroll behavior */
-        html {
-            scroll-behavior: smooth;
+        .priority-circle {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            flex-shrink: 0;
+            position: relative;
         }
         
-        /* Enhanced responsive design */
+        .priority-circle.high {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+        }
+        
+        .priority-circle.medium {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        }
+        
+        .priority-circle.low {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+        
+        .priority-info-text {
+            flex: 1;
+        }
+        
+        .priority-info-label {
+            font-weight: 600;
+            color: #374151;
+            font-size: 0.95rem;
+            margin-bottom: 2px;
+        }
+        
+        .priority-info-desc {
+            font-size: 0.85rem;
+            color: #6b7280;
+            line-height: 1.4;
+        }
+        
+        /* Responsive Design */
         @media (max-width: 768px) {
             .container {
                 margin: 10px;
@@ -852,6 +794,34 @@
                 height: 48px;
                 font-size: 1.3rem;
             }
+            
+            .priority-info-card {
+                padding: 16px;
+                margin-bottom: 20px;
+            }
+            
+            .priority-info-title {
+                font-size: 1.1rem;
+                margin-bottom: 12px;
+            }
+            
+            .priority-info-item {
+                padding: 10px;
+                gap: 10px;
+            }
+            
+            .priority-circle {
+                width: 18px;
+                height: 18px;
+            }
+            
+            .priority-info-label {
+                font-size: 0.9rem;
+            }
+            
+            .priority-info-desc {
+                font-size: 0.8rem;
+            }
         }
         
         @media (max-width: 480px) {
@@ -891,6 +861,48 @@
                 font-size: 1.2rem;
                 bottom: 15px;
                 right: 15px;
+            }
+            
+            .priority-info-card {
+                padding: 12px;
+                margin-bottom: 16px;
+            }
+            
+            .priority-info-title {
+                font-size: 1rem;
+                margin-bottom: 10px;
+                gap: 8px;
+            }
+            
+            .priority-info-icon {
+                font-size: 1.1em;
+            }
+            
+            .priority-info-content {
+                gap: 8px;
+            }
+            
+            .priority-info-item {
+                padding: 8px;
+                gap: 8px;
+                flex-direction: row;
+                align-items: center;
+            }
+            
+            .priority-circle {
+                width: 16px;
+                height: 16px;
+                border-width: 1px;
+            }
+            
+            .priority-info-label {
+                font-size: 0.85rem;
+                margin-bottom: 1px;
+            }
+            
+            .priority-info-desc {
+                font-size: 0.75rem;
+                line-height: 1.3;
             }
         }
     </style>
@@ -940,6 +952,37 @@
         
         <!-- Status Messages -->
         <div id="statusMessage" class="status-message"></div>
+        
+        <!-- Priority Information Card -->
+        <div class="priority-info-card">
+            <h3 class="priority-info-title">
+                <span class="priority-info-icon">🎯</span>
+                Görev Öncelik Seviyeleri
+            </h3>
+            <div class="priority-info-content">
+                <div class="priority-info-item">
+                    <div class="priority-circle high"></div>
+                    <div class="priority-info-text">
+                        <div class="priority-info-label">Yüksek Öncelik</div>
+                        <div class="priority-info-desc">Kritik görevler - Mutlaka tamamlanması gereken</div>
+                    </div>
+                </div>
+                <div class="priority-info-item">
+                    <div class="priority-circle medium"></div>
+                    <div class="priority-info-text">
+                        <div class="priority-info-label">Orta Öncelik</div>
+                        <div class="priority-info-desc">Önemli görevler - Projenin kalitesini artıran</div>
+                    </div>
+                </div>
+                <div class="priority-info-item">
+                    <div class="priority-circle low"></div>
+                    <div class="priority-info-text">
+                        <div class="priority-info-label">Düşük Öncelik</div>
+                        <div class="priority-info-desc">İsteğe bağlı - Ek özellikler ve iyileştirmeler</div>
+                    </div>
+                </div>
+            </div>
+        </div>
         
         <!-- Project Information Section -->
         <div class="control-section">
@@ -1232,7 +1275,8 @@
         let formData = {
             projectInfo: {},
             checklistItems: {},
-            notes: {}
+            notes: {},
+            colorTheme: null
         };
         
         // Initialize the form
@@ -1242,6 +1286,60 @@
             setupEventListeners();
             setupScrollToTop();
         });
+        
+        // Color selection function
+        function selectColor(color) {
+            // Remove previous selection
+            document.querySelectorAll('.color-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // Add selection to clicked option
+            const selectedOption = document.querySelector(`.color-option[data-color="${color}"]`);
+            if (selectedOption) {
+                selectedOption.classList.add('selected');
+                formData.colorTheme = color;
+                saveToLocalStorage();
+                
+                // Apply color theme to page
+                applyColorTheme(color);
+                
+                // Log to analytics
+                if (window.analytics) {
+                    logEvent(window.analytics, 'color_theme_selected', {
+                        form_name: 'control_form',
+                        color_theme: color
+                    });
+                }
+            }
+        }
+        
+        // Apply color theme to page elements
+        function applyColorTheme(color) {
+            const root = document.documentElement;
+            
+            switch(color) {
+                case 'red':
+                    root.style.setProperty('--theme-primary', '#ff4757');
+                    root.style.setProperty('--theme-secondary', '#ff3742');
+                    root.style.setProperty('--theme-accent', '#ff6b7a');
+                    break;
+                case 'orange':
+                    root.style.setProperty('--theme-primary', '#ffa502');
+                    root.style.setProperty('--theme-secondary', '#ff8c00');
+                    root.style.setProperty('--theme-accent', '#ffb732');
+                    break;
+                case 'green':
+                    root.style.setProperty('--theme-primary', '#2ed573');
+                    root.style.setProperty('--theme-secondary', '#00b894');
+                    root.style.setProperty('--theme-accent', '#55e385');
+                    break;
+                default:
+                    root.style.setProperty('--theme-primary', '#007acc');
+                    root.style.setProperty('--theme-secondary', '#005a9e');
+                    root.style.setProperty('--theme-accent', '#4d9de0');
+            }
+        }
         
         function setupEventListeners() {
             // Checkbox listeners
@@ -1390,6 +1488,11 @@
                         document.getElementById('technicalChallenges').value = formData.notes.technicalChallenges || '';
                         document.getElementById('futureImprovements').value = formData.notes.futureImprovements || '';
                     }
+                    
+                    // Restore color theme
+                    if (formData.colorTheme) {
+                        selectColor(formData.colorTheme);
+                    }
                 } catch (e) {
                     console.error('Error loading saved progress:', e);
                 }
@@ -1428,7 +1531,8 @@
                 formData = {
                     projectInfo: {},
                     checklistItems: {},
-                    notes: {}
+                    notes: {},
+                    colorTheme: null
                 };
                 
                 // Reset UI
@@ -1439,6 +1543,14 @@
                 document.querySelectorAll('.form-input, .form-textarea').forEach(input => {
                     input.value = '';
                 });
+                
+                // Reset color selection
+                document.querySelectorAll('.color-option').forEach(option => {
+                    option.classList.remove('selected');
+                });
+                
+                // Reset theme to default
+                applyColorTheme('default');
                 
                 updateProgress();
                 
@@ -1504,7 +1616,7 @@
             if (window.analytics) {
                 logEvent(window.analytics, 'navigation', {
                     from: 'control_form',
-                    to: 'index'
+                    to: '/'
                 });
             }
             
