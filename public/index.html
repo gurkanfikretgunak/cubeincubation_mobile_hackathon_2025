@@ -369,27 +369,35 @@
       font-family: 'Fira Mono', monospace;
       font-size: 0.98em;
     }
-    /* Scroll to top button */
+    /* Scroll to top button - Modern Design */
     #scrollTopBtn {
-      display: none;
       position: fixed;
-      bottom: 32px;
-      right: 24px;
-      z-index: 99;
-      background: #a3bcf7;
-      color: #232946;
+      bottom: 30px;
+      right: 30px;
+      z-index: 1000;
+      background: linear-gradient(135deg, #a3bcf7 0%, #7b93d6 100%);
+      color: white;
       border: none;
-      outline: none;
       border-radius: 50%;
-      width: 48px;
-      height: 48px;
-      box-shadow: 0 2px 8px rgba(120,120,180,0.13);
+      width: 56px;
+      height: 56px;
+      font-size: 1.5rem;
       cursor: pointer;
-      font-size: 2em;
-      transition: background 0.2s;
+      box-shadow: 0 4px 16px rgba(163, 188, 247, 0.3);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      display: none;
+      align-items: center;
+      justify-content: center;
     }
+    
     #scrollTopBtn:hover {
-      background: #7b93d6;
+      background: linear-gradient(135deg, #7b93d6 0%, #a3bcf7 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(163, 188, 247, 0.4);
+    }
+    
+    #scrollTopBtn.show {
+      display: flex !important;
     }
     /* Cookie Consent Modal Dialog - Improved Design */
     #cookieConsentModal {
@@ -1360,7 +1368,7 @@
     </ul>
   </section>
   <button id="scrollTopBtn" title="Go to top" aria-label="Go to top">
-    &#8679;
+    ↑
   </button>
 
     <!-- Footer -->
@@ -2266,20 +2274,25 @@
       }, 700);
     };
 
-    // Scroll to top button logic
+    // Scroll to top button logic - Modern Implementation
     const scrollBtn = document.getElementById("scrollTopBtn");
-    window.onscroll = function() {
-      const scrolled = window.scrollY || document.documentElement.scrollTop;
-      const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-      if (docHeight > 0 && scrolled / docHeight > 0.6) {
-        scrollBtn.style.display = "block";
+    
+    // Show/hide button based on scroll position
+    window.addEventListener('scroll', function() {
+      if (window.pageYOffset > 300) {
+        scrollBtn.classList.add('show');
       } else {
-        scrollBtn.style.display = "none";
+        scrollBtn.classList.remove('show');
       }
-    };
-    scrollBtn.onclick = function() {
-      window.scrollTo({top: 0, behavior: 'smooth'});
-    };
+    });
+    
+    // Smooth scroll to top
+    scrollBtn.addEventListener('click', function() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
 
     // Firebase config and initialization
     const firebaseConfig = {
