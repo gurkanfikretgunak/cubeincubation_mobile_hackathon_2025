@@ -905,6 +905,37 @@
                 line-height: 1.3;
             }
         }
+        
+        /* Highlight incomplete fields animation */
+        .highlight-incomplete {
+            animation: highlightPulse 2s ease-in-out 3;
+            background: linear-gradient(135deg, rgba(255, 71, 87, 0.1) 0%, rgba(255, 55, 66, 0.15) 100%) !important;
+            border: 2px solid #ff4757 !important;
+            border-radius: 8px !important;
+            box-shadow: 0 0 15px rgba(255, 71, 87, 0.4) !important;
+            transform: scale(1.02) !important;
+        }
+        
+        @keyframes highlightPulse {
+            0% {
+                background: linear-gradient(135deg, rgba(255, 71, 87, 0.1) 0%, rgba(255, 55, 66, 0.15) 100%);
+                border-color: #ff4757;
+                box-shadow: 0 0 10px rgba(255, 71, 87, 0.3);
+                transform: scale(1.02);
+            }
+            50% {
+                background: linear-gradient(135deg, rgba(255, 71, 87, 0.2) 0%, rgba(255, 55, 66, 0.25) 100%);
+                border-color: #ff3742;
+                box-shadow: 0 0 25px rgba(255, 71, 87, 0.6);
+                transform: scale(1.03);
+            }
+            100% {
+                background: linear-gradient(135deg, rgba(255, 71, 87, 0.1) 0%, rgba(255, 55, 66, 0.15) 100%);
+                border-color: #ff4757;
+                box-shadow: 0 0 10px rgba(255, 71, 87, 0.3);
+                transform: scale(1.02);
+            }
+        }
     </style>
 </head>
 <body>
@@ -1275,8 +1306,7 @@
         let formData = {
             projectInfo: {},
             checklistItems: {},
-            notes: {},
-            colorTheme: null
+            notes: {}
         };
         
         // Initialize the form
@@ -1286,60 +1316,6 @@
             setupEventListeners();
             setupScrollToTop();
         });
-        
-        // Color selection function
-        function selectColor(color) {
-            // Remove previous selection
-            document.querySelectorAll('.color-option').forEach(option => {
-                option.classList.remove('selected');
-            });
-            
-            // Add selection to clicked option
-            const selectedOption = document.querySelector(`.color-option[data-color="${color}"]`);
-            if (selectedOption) {
-                selectedOption.classList.add('selected');
-                formData.colorTheme = color;
-                saveToLocalStorage();
-                
-                // Apply color theme to page
-                applyColorTheme(color);
-                
-                // Log to analytics
-                if (window.analytics) {
-                    logEvent(window.analytics, 'color_theme_selected', {
-                        form_name: 'control_form',
-                        color_theme: color
-                    });
-                }
-            }
-        }
-        
-        // Apply color theme to page elements
-        function applyColorTheme(color) {
-            const root = document.documentElement;
-            
-            switch(color) {
-                case 'red':
-                    root.style.setProperty('--theme-primary', '#ff4757');
-                    root.style.setProperty('--theme-secondary', '#ff3742');
-                    root.style.setProperty('--theme-accent', '#ff6b7a');
-                    break;
-                case 'orange':
-                    root.style.setProperty('--theme-primary', '#ffa502');
-                    root.style.setProperty('--theme-secondary', '#ff8c00');
-                    root.style.setProperty('--theme-accent', '#ffb732');
-                    break;
-                case 'green':
-                    root.style.setProperty('--theme-primary', '#2ed573');
-                    root.style.setProperty('--theme-secondary', '#00b894');
-                    root.style.setProperty('--theme-accent', '#55e385');
-                    break;
-                default:
-                    root.style.setProperty('--theme-primary', '#007acc');
-                    root.style.setProperty('--theme-secondary', '#005a9e');
-                    root.style.setProperty('--theme-accent', '#4d9de0');
-            }
-        }
         
         function setupEventListeners() {
             // Checkbox listeners
@@ -1488,11 +1464,6 @@
                         document.getElementById('technicalChallenges').value = formData.notes.technicalChallenges || '';
                         document.getElementById('futureImprovements').value = formData.notes.futureImprovements || '';
                     }
-                    
-                    // Restore color theme
-                    if (formData.colorTheme) {
-                        selectColor(formData.colorTheme);
-                    }
                 } catch (e) {
                     console.error('Error loading saved progress:', e);
                 }
@@ -1531,8 +1502,7 @@
                 formData = {
                     projectInfo: {},
                     checklistItems: {},
-                    notes: {},
-                    colorTheme: null
+                    notes: {}
                 };
                 
                 // Reset UI
@@ -1543,14 +1513,6 @@
                 document.querySelectorAll('.form-input, .form-textarea').forEach(input => {
                     input.value = '';
                 });
-                
-                // Reset color selection
-                document.querySelectorAll('.color-option').forEach(option => {
-                    option.classList.remove('selected');
-                });
-                
-                // Reset theme to default
-                applyColorTheme('default');
                 
                 updateProgress();
                 
